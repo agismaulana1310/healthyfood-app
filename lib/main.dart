@@ -27,7 +27,7 @@ class KedeApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
 
-      home: const HomePage(),
+      home: const LandingPage(),
     );
   }
 }
