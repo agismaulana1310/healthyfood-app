@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'login-page/landing_page.dart'; // Memanggil halaman Landing
+import 'package:healthyfood_app/login-page/landing_page.dart';
 
 void main() {
-  // Mengatur status bar agar tembus pandang (opsional, untuk tampilan lebih bersih)
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ),
   );
+
   runApp(const KedeApp());
 }
 
@@ -20,13 +20,14 @@ class KedeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Kede Grocery App',
-      debugShowCheckedModeBanner: false, // Menghilangkan pita "DEBUG"
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Roboto', // Ganti dengan font pilihan Anda jika ada
-        primaryColor: const Color(0xFF51B036), // Hijau khas Kede
+        fontFamily: 'Roboto',
+        primaryColor: const Color(0xFF51B036),
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const LandingPage(), // Mulai dari halaman ini
+
+      home: const LandingPage(),
     );
   }
 }
