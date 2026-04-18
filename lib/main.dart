@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'pages/home_page.dart';
+import 'package:healthyfood_app/login-page/landing_page.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(

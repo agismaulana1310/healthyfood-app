@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'create_account_page.dart'; // Impor untuk navigasi ke halaman Register
 import 'forget_password_page.dart';
+import '../pages/home_page.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -10,7 +11,8 @@ class SignInPage extends StatelessWidget {
     const Color primaryGreen = Color(0xFF51B036);
     const Color darkText = Color(0xFF133F43);
     // URL Gambar Buah
-    const String loginBgUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtWuGaBnLOhzG4wbUhFxtF9K0_HytXJJQOIA&s';
+    const String loginBgUrl =
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtWuGaBnLOhzG4wbUhFxtF9K0_HytXJJQOIA&s';
 
     return Scaffold(
       body: Stack(
@@ -21,9 +23,10 @@ class SignInPage extends StatelessWidget {
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
-            errorBuilder: (context, error, stackTrace) => Container(color: Colors.grey[300]),
+            errorBuilder: (context, error, stackTrace) =>
+                Container(color: Colors.grey[300]),
           ),
-          
+
           // Panel Putih Melengkung
           Align(
             alignment: Alignment.bottomCenter,
@@ -42,18 +45,30 @@ class SignInPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Sign In', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: darkText)),
-                        IconButton(icon: Icon(Icons.cancel, color: Colors.blueGrey.shade800, size: 30), onPressed: () => Navigator.of(context).pop()),
+                        Text(
+                          'Sign In',
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.w900,
+                            color: darkText,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.cancel,
+                            color: Colors.blueGrey.shade800,
+                            size: 30,
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 32),
 
                     // Input Fields
-                   
                     _buildInput(hint: 'Enter your email'),
                     const SizedBox(height: 16),
-                    
-                  
+
                     _buildInput(hint: 'Enter your password', isPassword: true),
                     const SizedBox(height: 16),
 
@@ -64,22 +79,46 @@ class SignInPage extends StatelessWidget {
                         onPressed: () {
                           // Navigasi ke halaman Forget Password
                           Navigator.push(
-                            context, 
-                            MaterialPageRoute(builder: (context) => const ForgetPasswordPage())
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ForgetPasswordPage(),
+                            ),
                           );
-                        }, 
-                        child: Text('Forgot Password?', style: TextStyle(color: primaryGreen, fontSize: 15, fontWeight: FontWeight.bold))
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            color: primaryGreen,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
-                                        
 
                     // Tombol
-                    _buildButton(text: 'SIGN IN', onPressed: () {}, color: primaryGreen),
+                    _buildButton(
+                      text: 'SIGN IN',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage(),
+                          ),
+                        );
+                      },
+                      color: primaryGreen,
+                    ),
                     const SizedBox(height: 16),
                     _buildButton(
-                      text: 'CREATE AN ACCOUNT', 
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateAccountPage())), 
-                      color: primaryGreen
+                      text: 'CREATE AN ACCOUNT',
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CreateAccountPage(),
+                        ),
+                      ),
+                      color: primaryGreen,
                     ),
                   ],
                 ),
@@ -98,20 +137,48 @@ class SignInPage extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.grey.shade300)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: Color(0xFF51B036), width: 2)),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 18,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: Color(0xFF51B036), width: 2),
+        ),
       ),
     );
   }
 
-  Widget _buildButton({required String text, required VoidCallback onPressed, required Color color}) {
+  Widget _buildButton({
+    required String text,
+    required VoidCallback onPressed,
+    required Color color,
+  }) {
     return SizedBox(
-      width: double.infinity, height: 56,
+      width: double.infinity,
+      height: 56,
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(backgroundColor: color, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)), elevation: 0),
-        child: Text(text, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 1.0)),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 0,
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            letterSpacing: 1.0,
+          ),
+        ),
       ),
     );
   }
