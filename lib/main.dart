@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+ feature/checkout
+import 'pages/cart_page.dart';
+
 feature/profil-page
 import 'theme/theme_controller.dart';
 import 'pages/profile/profile_page.dart';
 import 'package:flutter/services.dart';
 import 'package:healthyfood_app/login-page/landing_page.dart';
 main
+ main
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -22,6 +26,11 @@ class KedeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+ feature/checkout
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: CartPage(),
+
 feature/profil-page
     return ValueListenableBuilder(
       valueListenable: ThemeController.isDark,
@@ -55,6 +64,7 @@ feature/profil-page
       ),
 
       home: const LandingPage(),
+ main
     );
   }
 }
