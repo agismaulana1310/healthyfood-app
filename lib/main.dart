@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
+feature/profil-page
 import 'theme/theme_controller.dart';
 import 'pages/profile/profile_page.dart';
+import 'package:flutter/services.dart';
+import 'package:healthyfood_app/login-page/landing_page.dart';
+main
 
 void main() {
-  runApp(const MyApp());
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
+
+  runApp(const KedeApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class KedeApp extends StatelessWidget {
+  const KedeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+feature/profil-page
     return ValueListenableBuilder(
       valueListenable: ThemeController.isDark,
       builder: (context, isDark, child) {
@@ -33,3 +45,17 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+    return MaterialApp(
+      title: 'Kede Grocery App',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'Roboto',
+        primaryColor: const Color(0xFF51B036),
+        scaffoldBackgroundColor: Colors.white,
+      ),
+
+      home: const LandingPage(),
+    );
+  }
+}
+main
