@@ -20,7 +20,7 @@ class ElementItem extends StatelessWidget {
       builder: (context, isDark, _) {
         return ValueListenableBuilder(
           valueListenable: ThemeController.primaryColor,
-          builder: (context, primaryColor, __) {
+          builder: (context, primaryColor, _) {
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Material(
