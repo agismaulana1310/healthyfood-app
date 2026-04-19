@@ -42,7 +42,6 @@ class ShoppingCartItem extends StatelessWidget {
 
           const SizedBox(width: 12),
 
-          // INFO
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +81,6 @@ class ShoppingCartItem extends StatelessWidget {
             ),
           ),
 
-          // QUANTITY
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(

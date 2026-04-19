@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthyfood_app/pages/home_page.dart';
 
 class WriteReviewPage extends StatefulWidget {
   const WriteReviewPage({super.key});
@@ -20,7 +21,6 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              // 🔙 HEADER
               Row(
                 children: [
                   GestureDetector(
@@ -44,7 +44,6 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
 
               const SizedBox(height: 30),
 
-              // 🔥 TITLE
               const Text(
                 "Rate this product",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -60,7 +59,6 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
 
               const SizedBox(height: 20),
 
-              // 🔥 RATING NUMBER
               Text(
                 rating.toStringAsFixed(1),
                 style: const TextStyle(
@@ -71,7 +69,6 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
 
               const SizedBox(height: 10),
 
-              // ⭐ STARS
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(5, (index) {
@@ -92,7 +89,6 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
 
               const SizedBox(height: 30),
 
-              // 🔥 TEXT AREA
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -120,7 +116,6 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
 
               const Spacer(),
 
-              // 🔥 BUTTON
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -132,12 +127,12 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                  onPressed: () {
-                    // 🔥 ACTION SUBMIT
-                    print("Rating: $rating");
-                    print("Review: ${reviewController.text}");
-
-                    Navigator.pop(context);
+                 onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      (route) => false, 
+                    );
                   },
                   child: const Text(
                     "SUBMIT REVIEW",
