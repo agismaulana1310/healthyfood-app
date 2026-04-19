@@ -167,9 +167,11 @@ class _ElementsPageState extends State<ElementsPage> {
                       title: component.name,
                       icon: component.icon,
                       onTap: () {
+                        // ignore: avoid_print
                         print('Tapped: ${component.name}');
                       },
                     );
+                  // ignore: unnecessary_to_list_in_spreads
                   }).toList(),
                 ],
               ),

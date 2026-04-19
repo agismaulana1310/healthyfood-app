@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
+import '../categories-page/categories_page.dart';
+import '../categories-page/wishlist_page.dart';
 
 class BottomNav extends StatelessWidget {
-<<<<<<< HEAD
-  final int currentIndex;
-  final Function(int) onTap;
-
-  const BottomNav({super.key, required this.currentIndex, required this.onTap});
-=======
   const BottomNav({super.key});
->>>>>>> edde103b098d50fbd832ba7078cdd9ab21883771
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-<<<<<<< HEAD
-      currentIndex: currentIndex, // Highlight icon yang aktif
-      onTap: onTap, // Fungsi saat icon di-klik
       selectedItemColor: Colors.green,
       unselectedItemColor: Colors.grey,
-      type: BottomNavigationBarType.fixed, // Supaya icon tidak geser/putih
-=======
-      selectedItemColor: Colors.green,
-      unselectedItemColor: Colors.grey,
->>>>>>> edde103b098d50fbd832ba7078cdd9ab21883771
       showSelectedLabels: false,
       showUnselectedLabels: false,
+      onTap: (index) {
+        if (index == 1) {
+          // Swap icon → Categories Page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CategoriesPage()),
+          );
+        } else if (index == 3) {
+          // Heart/Love icon → Wishlist Page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const WishlistPage()),
+          );
+        }
+      },
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
         BottomNavigationBarItem(icon: Icon(Icons.swap_horiz), label: ""),
@@ -34,8 +36,4 @@ class BottomNav extends StatelessWidget {
       ],
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> edde103b098d50fbd832ba7078cdd9ab21883771

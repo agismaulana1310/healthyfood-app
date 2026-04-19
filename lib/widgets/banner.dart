@@ -51,6 +51,7 @@ class BannerSection extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
+            // ignore: deprecated_member_use
             colors: [Colors.black.withOpacity(0.6), Colors.transparent],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,

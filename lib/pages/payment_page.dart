@@ -158,7 +158,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         const SizedBox(height: 8),
 
                         DropdownButtonFormField<String>(
-                          value: selectedCountry,
+                          initialValue: selectedCountry,
                           isExpanded: true,
                           decoration: InputDecoration(
                             filled: true,
@@ -275,6 +275,7 @@ class _PaymentPageState extends State<PaymentPage> {
         boxShadow: selected
             ? [
                 BoxShadow(
+                  // ignore: deprecated_member_use
                   color: color.withOpacity(0.3),
                   blurRadius: 10,
                   offset: const Offset(0, 5),
@@ -303,6 +304,7 @@ class _PaymentPageState extends State<PaymentPage> {
             ),
           ),
           const SizedBox(height: 20),
+          // ignore: deprecated_member_use
           Text(number, style: TextStyle(color: Colors.white.withOpacity(0.8))),
         ],
       ),

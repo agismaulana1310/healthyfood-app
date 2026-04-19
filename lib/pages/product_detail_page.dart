@@ -218,6 +218,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
+        // ignore: deprecated_member_use
         color: Colors.black.withOpacity(0.4),
         shape: BoxShape.circle,
       ),

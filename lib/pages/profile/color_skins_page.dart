@@ -31,6 +31,7 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
     super.initState();
     _hexController = TextEditingController(
       text: ThemeController.primaryColor.value
+          // ignore: deprecated_member_use
           .value
           .toRadixString(16)
           .toUpperCase()
@@ -46,6 +47,7 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
 
   void _updateThemeColor(Color color) {
     ThemeController.primaryColor.value = color;
+    // ignore: deprecated_member_use
     _hexController.text = color.value.toRadixString(16).toUpperCase().padLeft(8, '0');
   }
 
@@ -56,7 +58,7 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
       builder: (context, isDark, _) {
         return ValueListenableBuilder(
           valueListenable: ThemeController.primaryColor,
-          builder: (context, primaryColor, __) {
+          builder: (context, primaryColor, _) {
             return Scaffold(
               backgroundColor: isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
               appBar: AppBar(

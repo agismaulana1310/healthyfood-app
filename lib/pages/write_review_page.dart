@@ -127,12 +127,12 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                 onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                      (route) => false, 
-                    );
+                  onPressed: () {
+                    // 🔥 ACTION SUBMIT
+                    print("Rating: $rating");
+                    print("Review: ${reviewController.text}");
+
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     "SUBMIT REVIEW",
