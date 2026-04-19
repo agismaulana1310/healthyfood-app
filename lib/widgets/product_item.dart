@@ -54,7 +54,6 @@ class _ProductItemState extends State<ProductItem> {
         ),
         child: Row(
           children: [
-            // 🔥 IMAGE NETWORK (SUDAH DIPERBAIKI)
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
@@ -63,7 +62,6 @@ class _ProductItemState extends State<ProductItem> {
                 height: 60,
                 fit: BoxFit.cover,
 
-                // loading indicator
                 loadingBuilder: (context, child, progress) {
                   if (progress == null) return child;
                   return const SizedBox(

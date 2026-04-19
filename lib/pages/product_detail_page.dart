@@ -32,7 +32,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       body: SafeArea(
         child: Column(
           children: [
-            // 🔥 IMAGE + ICONS
             Stack(
               children: [
                 Image.network(
@@ -80,7 +79,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
                     const SizedBox(height: 10),
 
-                    // 💰 PRICE + QTY
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -111,12 +109,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
                     const SizedBox(height: 10),
 
-                    // ⭐ RATING
                     const RatingSection(),
 
                     const SizedBox(height: 15),
 
-                    // 🔘 TAB
                     TabSection(
                       selectedTab: selectedTab,
                       onTap: (i) {
@@ -128,7 +124,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
                     const SizedBox(height: 15),
 
-                    // 🔄 CONTENT SWITCH
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(

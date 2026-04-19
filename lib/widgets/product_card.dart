@@ -39,7 +39,10 @@ class _ProductCardState extends State<ProductCard> {
             ),
           ),
 
+<<<<<<< HEAD
+=======
           /// GRADIENT
+>>>>>>> edde103b098d50fbd832ba7078cdd9ab21883771
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(

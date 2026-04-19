@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
- feature/checkout
 import 'pages/cart_page.dart';
 
 feature/profil-page
@@ -11,14 +10,7 @@ main
  main
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-    ),
-  );
-
-  runApp(const KedeApp());
+  runApp(const MyApp());
 }
 
 class KedeApp extends StatelessWidget {
@@ -26,46 +18,9 @@ class KedeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
- feature/checkout
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: CartPage(),
-
-feature/profil-page
-    return ValueListenableBuilder(
-      valueListenable: ThemeController.isDark,
-      builder: (context, isDark, child) {
-        return ValueListenableBuilder(
-          valueListenable: ThemeController.primaryColor,
-          builder: (context, primaryColor, _) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                brightness: isDark ? Brightness.dark : Brightness.light,
-                scaffoldBackgroundColor:
-                    isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
-                primaryColor: primaryColor,
-              ),
-              home: const ProfilePage(),
-            );
-          },
-        );
-      },
     );
   }
 }
-    return MaterialApp(
-      title: 'Kede Grocery App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Roboto',
-        primaryColor: const Color(0xFF51B036),
-        scaffoldBackgroundColor: Colors.white,
-      ),
-
-      home: const LandingPage(),
- main
-    );
-  }
-}
-main
