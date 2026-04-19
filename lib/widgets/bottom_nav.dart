@@ -3,7 +3,7 @@ import '../categories-page/categories_page.dart';
 import '../categories-page/wishlist_page.dart';
 
 class BottomNav extends StatelessWidget {
-  const BottomNav({super.key});
+  const BottomNav({super.key, required int currentIndex, required void Function(int index) onTap});
 
   @override
   Widget build(BuildContext context) {
