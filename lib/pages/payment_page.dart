@@ -158,7 +158,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         const SizedBox(height: 8),
 
                         DropdownButtonFormField<String>(
-                          value: selectedCountry,
+                          initialValue: selectedCountry,
                           isExpanded: true,
                           decoration: InputDecoration(
                             filled: true,
