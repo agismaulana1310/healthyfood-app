@@ -31,6 +31,7 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
     super.initState();
     _hexController = TextEditingController(
       text: ThemeController.primaryColor.value
+          // ignore: deprecated_member_use
           .value
           .toRadixString(16)
           .toUpperCase()
@@ -46,6 +47,7 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
 
   void _updateThemeColor(Color color) {
     ThemeController.primaryColor.value = color;
+    // ignore: deprecated_member_use
     _hexController.text = color.value.toRadixString(16).toUpperCase().padLeft(8, '0');
   }
 

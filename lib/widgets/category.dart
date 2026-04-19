@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../categories-page/categories_page.dart';
 
 class Category extends StatelessWidget {
   const Category({super.key});
@@ -6,9 +7,9 @@ class Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final icons = [
-      Icons.apple,       
-      Icons.eco,          
-      Icons.restaurant_menu, 
+      Icons.apple,
+      Icons.eco,
+      Icons.restaurant_menu,
       Icons.lunch_dining,
       Icons.bakery_dining,
       Icons.local_dining,
@@ -18,12 +19,23 @@ class Category extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text("Categories", style: TextStyle(fontWeight: FontWeight.w600)),
-              Icon(Icons.arrow_forward, color: Colors.green),
-            ],
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CategoriesPage()),
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  "Categories",
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                Icon(Icons.arrow_forward, color: Colors.green),
+              ],
+            ),
           ),
 
           const SizedBox(height: 12),
