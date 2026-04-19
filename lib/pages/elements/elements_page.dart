@@ -78,7 +78,7 @@ class _ElementsPageState extends State<ElementsPage> {
       builder: (context, isDark, _) {
         return ValueListenableBuilder(
           valueListenable: ThemeController.primaryColor,
-          builder: (context, primaryColor, __) {
+          builder: (context, primaryColor, _) {
             return Scaffold(
               backgroundColor: isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF5F5F5),
               appBar: PreferredSize(
