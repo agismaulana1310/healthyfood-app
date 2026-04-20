@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../categories-page/categories_page.dart';
 import '../categories-page/wishlist_page.dart';
+import '../pages/cart_page.dart';
+import '../pages/profile/profile_page.dart';
+import '../pages/home_page.dart';
 
 class BottomNav extends StatelessWidget {
   const BottomNav({super.key, required int currentIndex, required void Function(int index) onTap});
@@ -19,11 +24,33 @@ class BottomNav extends StatelessWidget {
             context,
             MaterialPageRoute(builder: (context) => const CategoriesPage()),
           );
-        } else if (index == 3) {
+        }
+        else if (index == 2) {
+          // Cart icon → Cart Page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CartPage()),
+          );
+        }
+        else if (index == 3) {
           // Heart/Love icon → Wishlist Page
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const WishlistPage()),
+          );
+        }
+        else if (index == 4) {
+
+           Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ProfilePage()),
+          );
+        }
+        else {
+          // Home icon → Home Page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
           );
         }
       },

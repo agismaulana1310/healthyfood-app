@@ -60,7 +60,7 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
           valueListenable: ThemeController.primaryColor,
           builder: (context, primaryColor, _) {
             return Scaffold(
-              backgroundColor: isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,

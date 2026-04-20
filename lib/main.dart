@@ -1,32 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'login-page/landing_page.dart'; // Memanggil halaman Landing
+import '/theme/colors.dart';
+import '/theme/theme_controller.dart';
+import '/login-page/landing_page.dart';
 
 void main() {
-  // Mengatur status bar agar tembus pandang (opsional, untuk tampilan lebih bersih)
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-    ),
-  );
-  runApp(const KedeApp());
+  runApp(const MyApp());
 }
 
-class KedeApp extends StatelessWidget {
-  const KedeApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Kede Grocery App',
-      debugShowCheckedModeBanner: false, // Menghilangkan pita "DEBUG"
-      theme: ThemeData(
-        fontFamily: 'Roboto', // Ganti dengan font pilihan Anda jika ada
-        primaryColor: const Color(0xFF51B036), // Hijau khas Kede
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      home: const LandingPage(), // Mulai dari halaman ini
+    return ValueListenableBuilder<bool>(
+      valueListenable: ThemeController.isDark,
+      builder: (context, isDark, _) {
+        return ValueListenableBuilder<Color>(
+          valueListenable: ThemeController.primaryColor,
+          builder: (context, primary, _) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+
+              // 🔥 LIGHT THEME
+              theme: AppTheme.light.copyWith(
+                colorScheme: AppTheme.light.colorScheme.copyWith(
+                  primary: primary,
+                ),
+              ),
+
+              // 🌙 DARK THEME
+              darkTheme: AppTheme.dark.copyWith(
+                colorScheme: AppTheme.dark.colorScheme.copyWith(
+                  primary: primary,
+                ),
+              ),
+
+              // 🔁 SWITCH THEME
+              themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+
+              // 🚀 START PAGE
+              home: const LandingPage(),
+            );
+          },
+        );
+      },
     );
   }
 }

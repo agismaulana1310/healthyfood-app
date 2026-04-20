@@ -30,34 +30,50 @@ class Header extends StatelessWidget {
             ],
           ),
 
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NotificationPage(),
-                ),
-              );
-            },
-            child: Stack(
-              children: [
-                const Icon(
-                  Icons.notifications_none,
-                  color: Colors.black,
-                  size: 24,
-                ),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(50),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NotificationPage(),
                     ),
+                  );
+                },
+                hoverColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+
+                child: Padding(
+                  padding: const EdgeInsets.all(
+                    6,
+                  ),
+                  child: Stack(
+                    children: [
+                      const Icon(
+                        Icons.notifications_none,
+                        color: Colors.black,
+                        size: 24,
+                      ),
+                      Positioned(
+                        right: 0,
+                        child: Container(
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            color: Colors.green,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ],

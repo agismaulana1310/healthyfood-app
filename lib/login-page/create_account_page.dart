@@ -13,6 +13,7 @@ class CreateAccountPage extends StatelessWidget {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV8MLo1xl4P1enWfUkPKUlko5edOI9W7lhGw&s';
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           // Latar Belakang Gambar
