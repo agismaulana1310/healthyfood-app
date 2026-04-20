@@ -111,7 +111,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             const SizedBox(height: 6),
 
                             DropdownButtonFormField<String>(
-                              value: countries.contains(selectedCountry)
+                              initialValue: countries.contains(selectedCountry)
                                   ? selectedCountry
                                   : null,
 
