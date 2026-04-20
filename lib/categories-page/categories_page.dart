@@ -46,11 +46,14 @@ class CategoriesPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
 
-        // 🔥 PANAH KIRI → KE WISHLIST
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/wishlist');
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/home',
+              (route) => false,
+            );
           },
         ),
 

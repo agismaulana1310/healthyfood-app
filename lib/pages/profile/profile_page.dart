@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../login-page/landing_page.dart';
 import '../../theme/colors.dart';
 import '../../theme/theme_controller.dart';
 import '../../widgets/profile/profile_menu_item.dart';
@@ -6,6 +7,7 @@ import '../../widgets/routes/bottom_to_top_route.dart';
 import 'profile_detail_page.dart';
 import '../message/messages_page.dart';
 import '../elements/elements_page.dart';
+import '../notification_page.dart';
 import 'color_skins_page.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -20,9 +22,13 @@ class ProfilePage extends StatelessWidget {
           valueListenable: ThemeController.primaryColor,
           builder: (context, primaryColor, _) {
             return Scaffold(
-              backgroundColor: isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
+              backgroundColor: isDark
+                  ? const Color(0xFF0D1B0F)
+                  : const Color(0xFFF2F2F2),
               appBar: AppBar(
-                backgroundColor: isDark ? const Color(0xFF1a1a1a) : AppColors.white,
+                backgroundColor: isDark
+                    ? const Color(0xFF1a1a1a)
+                    : AppColors.white,
                 elevation: 0,
                 leading: IconButton(
                   icon: Icon(
@@ -30,14 +36,16 @@ class ProfilePage extends StatelessWidget {
                     color: isDark ? Colors.white : Colors.black,
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/home',
+                      (route) => false,
+                    );
                   },
                 ),
                 title: Text(
                   "User",
-                  style: TextStyle(
-                    color: isDark ? Colors.white : Colors.black,
-                  ),
+                  style: TextStyle(color: isDark ? Colors.white : Colors.black),
                 ),
                 centerTitle: true,
               ),
@@ -51,38 +59,39 @@ class ProfilePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          BottomToTopRoute(
-                            page: const ProfileDetailPage(),
-                          ),
+                          BottomToTopRoute(page: const ProfileDetailPage()),
                         );
                       },
                     ),
                     ProfileMenuItem(
                       icon: Icons.notifications, // IKON UNTUK NOTIFICATIONS
                       title: "NOTIFICATIONS",
-                      onTap: () {},
-                    ),
-                    ProfileMenuItem(
-                      icon: Icons.message, // IKON UNTUK MESSAGE (lebih mewakili chat)
-                      title: "MESSAGE",
                       onTap: () {
                         Navigator.push(
                           context,
-                          BottomToTopRoute(
-                            page: const MessagesPage(),
-                          ),
+                          BottomToTopRoute(page: const NotificationPage()),
                         );
                       },
                     ),
                     ProfileMenuItem(
-                      icon: Icons.widgets, // IKON UNTUK ELEMENTS (alternatif grid)
+                      icon: Icons
+                          .message, // IKON UNTUK MESSAGE (lebih mewakili chat)
+                      title: "MESSAGE",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          BottomToTopRoute(page: const MessagesPage()),
+                        );
+                      },
+                    ),
+                    ProfileMenuItem(
+                      icon: Icons
+                          .widgets, // IKON UNTUK ELEMENTS (alternatif grid)
                       title: "ELEMENTS",
                       onTap: () {
                         Navigator.push(
                           context,
-                          BottomToTopRoute(
-                            page: const ElementsPage(),
-                          ),
+                          BottomToTopRoute(page: const ElementsPage()),
                         );
                       },
                     ),
@@ -92,48 +101,22 @@ class ProfilePage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          BottomToTopRoute(
-                            page: const ColorSkinsPage(),
-                          ),
+                          BottomToTopRoute(page: const ColorSkinsPage()),
                         );
                       },
                     ),
                     ProfileMenuItem(
                       icon: Icons.logout, // IKON UNTUK LOGOUT
                       title: "LOGOUT",
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
-              bottomNavigationBar: BottomAppBar(
-                color: isDark ? const Color(0xFF1a1a1a) : Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.home),
-                      color: Colors.grey,
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.compare_arrows),
-                      color: Colors.grey,
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.shopping_cart),
-                      color: Colors.grey,
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.favorite_border),
-                      color: Colors.grey,
-                      onPressed: () {},
-                    ),
-                    CircleAvatar(
-                      radius: 16,
-                      backgroundImage: const AssetImage("assets/images/profile.jpg"),
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const LandingPage(),
+                          ),
+                          (route) => false,
+                        );
+                      },
                     ),
                   ],
                 ),

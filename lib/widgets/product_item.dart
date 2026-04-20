@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../pages/product_detail_page.dart';
 import 'quantity_selector.dart';
 
 class ProductItem extends StatefulWidget {
@@ -37,12 +36,14 @@ class _ProductItemState extends State<ProductItem> {
 
     return InkWell(
       onTap: () {
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (_) =>
-                ProductDetailPage(name: widget.name, price: widget.price, image: widget.image, description: widget.description),
-          ),
+          '/detail',
+          arguments: {
+            'name': widget.name,
+            'price': '\$${widget.price.toStringAsFixed(1)}',
+            'image': widget.image,
+          },
         );
       },
       child: Container(

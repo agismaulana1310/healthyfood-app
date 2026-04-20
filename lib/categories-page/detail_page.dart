@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../pages/cart_page.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -10,6 +11,14 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   int quantity = 1;
   int selectedTab = 0;
+
+  Widget _buildProductImage(String image) {
+    if (image.startsWith('http://') || image.startsWith('https://')) {
+      return Image.network(image, fit: BoxFit.cover);
+    }
+
+    return Image.asset(image, fit: BoxFit.cover);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +47,7 @@ class _DetailPageState extends State<DetailPage> {
                 SizedBox(
                   height: 280,
                   width: double.infinity,
-                  child: Image.network(image, fit: BoxFit.cover),
+                  child: _buildProductImage(image),
                 ),
 
                 Positioned(
@@ -220,19 +229,29 @@ class _DetailPageState extends State<DetailPage> {
                         const SizedBox(width: 16),
 
                         Expanded(
-                          child: Container(
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius:
-                                  BorderRadius.circular(15),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'ADD TO CART  \$${totalPrice.toStringAsFixed(1)}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const CartPage(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius:
+                                    BorderRadius.circular(15),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'ADD TO CART',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),

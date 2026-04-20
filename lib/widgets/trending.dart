@@ -10,33 +10,52 @@ class Trending extends StatelessWidget {
       {
         "title": "Avocado",
         "price": "\$6.7",
-        "img": "assets/images/avocado.webp",
+        "img": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYe-NnBRQOLO2tLZkUyiQ4LH0LPoBflFVtVg&s',
+
       },
       {
         "title": "Broccoli",
         "price": "\$8.7",
-        "img": "assets/images/broccoli.webp",
+        "img": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj-tiBKMEOi6IlBI31zKf-k9mpgAOceezDaA&s'
+
       },
       {
         "title": "Tomatoes",
         "price": "\$4.9",
-        "img": "assets/images/tomato.webp",
+        "img": 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0YYiMyh3OM_g_6HQlEDQ_2Eh6ksCg9-tyGQ&s',
       },
-      {"title": "Grapes", "price": "\$7.2", "img": "assets/images/grapes.jpg"},
+      {
+        "title": "Grapes",
+        "price": "\$7.2",
+        "img":       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWNS0ut2GrjHs7fo9UZ9CrJHcsO9DmRXoAiA&s',
+
+      },
     ];
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "Trending Deals",
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
-              Icon(Icons.arrow_forward, color: Colors.green),
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/category',
+                    arguments: {
+                      'name': 'Fruits',
+                      'items': '87 Items',
+                    },
+                  );
+                },
+                child: const Icon(Icons.arrow_forward, color: Colors.green),
+              ),
             ],
           ),
 
@@ -67,7 +86,16 @@ class Trending extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/category',
+                  arguments: {
+                    'name': 'Fruits',
+                    'items': '87 Items',
+                  },
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 elevation: 0,

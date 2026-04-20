@@ -5,6 +5,9 @@ import '../widgets/category.dart';
 import '../widgets/trending.dart';
 import '../widgets/bottom_nav.dart';
 import 'cart_page.dart'; // Import halaman Cart kamu
+import '../categories-page/categories_page.dart';
+import '../categories-page/wishlist_page.dart';
+import 'profile/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,10 +42,10 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      const Center(child: Text("Halaman Transaksi")), 
-      const CartPage(), 
-      const Center(child: Text("Halaman Favorit")),  
-      const Center(child: Text("Halaman Profil")), 
+      const CategoriesPage(),
+      const CartPage(),
+      const WishlistPage(),
+      const ProfilePage(),
     ];
 
     return Scaffold(
