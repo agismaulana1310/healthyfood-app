@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+
       body: SafeArea(child: pages[_currentIndex]),
 
       bottomNavigationBar: BottomNav(
