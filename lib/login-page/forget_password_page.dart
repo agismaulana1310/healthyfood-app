@@ -12,6 +12,7 @@ class ForgetPasswordPage extends StatelessWidget {
     const String bgUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXmaJabjyuceLzxhj8K9w6QC1nVHmVZtmIuA&s';
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           // Latar Belakang Gambar

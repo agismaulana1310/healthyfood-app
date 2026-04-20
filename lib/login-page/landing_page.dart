@@ -10,7 +10,7 @@ class LandingPage extends StatelessWidget {
     const Color darkText = Color(0xFF133F43);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAF9), // Latar belakang abu-abu sangat terang
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),

@@ -36,21 +36,22 @@ class CategoriesPage extends StatelessWidget {
         'items': '43 Items',
         'icon': Icons.bakery_dining,
       },
+      
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       // ================= APPBAR =================
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
 
         // 🔥 PANAH KIRI → KE WISHLIST
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/wishlist');
+            Navigator.pop(context);
           },
         ),
 

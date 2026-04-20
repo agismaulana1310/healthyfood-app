@@ -15,6 +15,7 @@ class SignInPage extends StatelessWidget {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtWuGaBnLOhzG4wbUhFxtF9K0_HytXJJQOIA&s';
 
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           // Latar Belakang Gambar

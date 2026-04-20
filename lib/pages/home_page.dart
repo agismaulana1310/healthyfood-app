@@ -4,7 +4,7 @@ import '../widgets/banner.dart';
 import '../widgets/category.dart';
 import '../widgets/trending.dart';
 import '../widgets/bottom_nav.dart';
-import 'cart_page.dart'; // Import halaman Cart kamu
+import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,7 +46,8 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+
       body: SafeArea(child: pages[_currentIndex]),
 
       bottomNavigationBar: BottomNav(

@@ -26,7 +26,7 @@ class _DetailPageState extends State<DetailPage> {
     final double totalPrice = priceValue * quantity;
 
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       // ================= BODY =================
       body: SafeArea(
