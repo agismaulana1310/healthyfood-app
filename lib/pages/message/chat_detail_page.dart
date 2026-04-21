@@ -6,11 +6,7 @@ class ChatDetailPage extends StatelessWidget {
   final String name;
   final String imageUrl;
 
-  const ChatDetailPage({
-    super.key,
-    required this.name,
-    required this.imageUrl,
-  });
+  const ChatDetailPage({super.key, required this.name, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +48,8 @@ class ChatDetailPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     // 🔹 KAMU (KANAN)
-                    const ChatBubble(
-                      message: "Hi, Kate",
-                      isMe: true,
-                    ),
-                    const ChatBubble(
-                      message: "How are you?",
-                      isMe: true,
-                    ),
+                    const ChatBubble(message: "Hi, Kate", isMe: true),
+                    const ChatBubble(message: "How are you?", isMe: true),
                     const SizedBox(height: 10),
                     // 🔹 KATE
                     ChatBubble(
@@ -71,7 +61,8 @@ class ChatDetailPage extends StatelessWidget {
                     const SizedBox(height: 10),
                     // 🔹 BLUE NINJA
                     ChatBubble(
-                      message: "Hi there, I am also fine, thanks! And how are you?",
+                      message:
+                          "Hi there, I am also fine, thanks! And how are you?",
                       isMe: false,
                       imageUrl: "assets/images/foto 2.jpg",
                       senderName: "Blue Ninja",
@@ -111,7 +102,10 @@ class ChatDetailPage extends StatelessWidget {
               ),
               // 🔹 INPUT MESSAGE
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 8,
+                ),
                 color: isDark ? const Color(0xFF1a1a1a) : Colors.white,
                 child: Row(
                   children: [
@@ -128,7 +122,9 @@ class ChatDetailPage extends StatelessWidget {
                             color: isDark ? Colors.grey[600] : Colors.grey[400],
                           ),
                           filled: true,
-                          fillColor: isDark ? Colors.grey[900] : Colors.grey[200],
+                          fillColor: isDark
+                              ? Colors.grey[900]
+                              : Colors.grey[200],
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none,
@@ -146,7 +142,7 @@ class ChatDetailPage extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         );

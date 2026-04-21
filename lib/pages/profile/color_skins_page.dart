@@ -23,16 +23,14 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
     {'name': 'LightBlue', 'color': const Color(0xFF0288D1)},
     {'name': 'Teal', 'color': const Color(0xFF00796B)},
     {'name': 'Lime', 'color': const Color(0xFFC0CA33)},
-    {'name': 'Deeporange', 'color': const Color(0xFFE64A19)},
+    {'name': 'DeepOrange', 'color': const Color(0xFFE64A19)},
   ];
 
   @override
   void initState() {
     super.initState();
     _hexController = TextEditingController(
-      text: ThemeController.primaryColor.value
-          // ignore: deprecated_member_use
-          .value
+      text: ThemeController.primaryColor.value.value
           .toRadixString(16)
           .toUpperCase()
           .padLeft(8, '0'),
@@ -47,12 +45,16 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
 
   void _updateThemeColor(Color color) {
     ThemeController.primaryColor.value = color;
-    // ignore: deprecated_member_use
-    _hexController.text = color.value.toRadixString(16).toUpperCase().padLeft(8, '0');
+    _hexController.text =
+        color.value.toRadixString(16).toUpperCase().padLeft(8, '0');
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
+
     return ValueListenableBuilder(
       valueListenable: ThemeController.isDark,
       builder: (context, isDark, _) {
@@ -60,23 +62,17 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
           valueListenable: ThemeController.primaryColor,
           builder: (context, primaryColor, _) {
             return Scaffold(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 leading: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: isDark ? Colors.white : Colors.black,
-                  ),
+                  icon: Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),
                 ),
                 title: Text(
                   "Color Themes",
-                  style: TextStyle(
-                    color: isDark ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: textTheme.titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 actions: [
                   Padding(
@@ -84,112 +80,101 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
                     child: Center(
                       child: Text(
                         "Link",
-                        style: TextStyle(
-                          color: isDark ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textTheme.bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                     ),
                   )
                 ],
               ),
+
               body: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  // COLOR THEMES TITLE
+
+                  /// TITLE
                   Text(
                     "Color Themes",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.black,
-                    ),
+                    style: textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
 
-                  // LAYOUT THEMES TITLE
+                  /// LAYOUT THEME
                   Text(
                     "Layout Themes",
-                    style: TextStyle(
-                      fontSize: 16,
+                    style: textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.green[700],
+                      color: colorScheme.primary,
                     ),
                   ),
                   const SizedBox(height: 12),
+
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFFF9E6),
+                      color: colorScheme.surfaceVariant,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ValueListenableBuilder(
-                          valueListenable: ThemeController.isDark,
-                          builder: (context, isDarkInner, _) {
-                            return Text(
-                              "Framework7 comes with 2 main layout themes: Light (default) and Dark:",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: isDarkInner ? Colors.white : Colors.black,
-                              ),
-                            );
-                          },
+                        Text(
+                          "Light and Dark mode available:",
+                          style: textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 12),
+
                         Row(
                           children: [
-                            // LIGHT
+
+                            /// LIGHT
                             Expanded(
                               child: GestureDetector(
-                                onTap: () {
-                                  ThemeController.isDark.value = false;
-                                },
+                                onTap: () =>
+                                    ThemeController.isDark.value = false,
                                 child: Container(
                                   height: 70,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: !isDark ? Colors.green : Colors.transparent,
+                                      color: !isDark
+                                          ? colorScheme.primary
+                                          : Colors.transparent,
                                       width: 3,
                                     ),
                                   ),
                                   child: !isDark
-                                      ? const Align(
-                                          alignment: Alignment.center,
-                                          child: Icon(Icons.check_circle,
-                                              color: Colors.green, size: 28),
-                                        )
+                                      ? Icon(Icons.check_circle,
+                                          color: colorScheme.primary)
                                       : null,
                                 ),
                               ),
                             ),
+
                             const SizedBox(width: 12),
-                            // DARK
+
+                            /// DARK
                             Expanded(
                               child: GestureDetector(
-                                onTap: () {
-                                  ThemeController.isDark.value = true;
-                                },
+                                onTap: () =>
+                                    ThemeController.isDark.value = true,
                                 child: Container(
                                   height: 70,
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFF1a1a1a),
+                                    color: Colors.black,
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: isDark ? Colors.green : Colors.transparent,
+                                      color: isDark
+                                          ? colorScheme.primary
+                                          : Colors.transparent,
                                       width: 3,
                                     ),
                                   ),
                                   child: isDark
-                                      ? const Align(
-                                          alignment: Alignment.center,
-                                          child: Icon(Icons.check_circle,
-                                              color: Colors.green, size: 28),
-                                        )
+                                      ? Icon(Icons.check_circle,
+                                          color: colorScheme.primary)
                                       : null,
                                 ),
                               ),
@@ -202,86 +187,75 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
 
                   const SizedBox(height: 20),
 
-                  // DEFAULT COLOR THEMES TITLE
+                  /// DEFAULT COLOR
                   Text(
                     "Default Color Themes",
-                    style: TextStyle(
-                      fontSize: 16,
+                    style: textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.green[700],
+                      color: colorScheme.primary,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  
-                  // DEFAULT COLOR THEMES SECTION
+
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFFF9E6),
+                      color: colorScheme.surfaceVariant,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 12),
-                        ValueListenableBuilder(
-                          valueListenable: ThemeController.isDark,
-                          builder: (context, isDarkInner, _) {
-                            return Text(
-                              "Framework7 comes with 12 color themes set.",
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: isDarkInner ? Colors.white : Colors.black,
-                              ),
-                            );
-                          },
+
+                        Text(
+                          "Choose your favorite color:",
+                          style: textTheme.bodyMedium,
                         ),
+
                         const SizedBox(height: 16),
-                        // COLOR THEME BUTTONS - 3 COLUMNS GRID
+
                         Column(
                           children: [
                             for (int i = 0; i < colorThemes.length; i += 3)
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
+                                padding:
+                                    const EdgeInsets.only(bottom: 16),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     for (int j = 0; j < 3; j++)
                                       if (i + j < colorThemes.length)
                                         Expanded(
                                           child: Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                                            padding:
+                                                const EdgeInsets.symmetric(horizontal: 4),
                                             child: GestureDetector(
                                               onTap: () =>
-                                                  _updateThemeColor(colorThemes[i + j]['color']),
+                                                  _updateThemeColor(
+                                                      colorThemes[i + j]['color']),
                                               child: Container(
                                                 padding: const EdgeInsets.symmetric(
-                                                  horizontal: 12,
-                                                  vertical: 10,
-                                                ),
+                                                    vertical: 10),
                                                 decoration: BoxDecoration(
-                                                  color: colorThemes[i + j]['color'],
-                                                  borderRadius: BorderRadius.circular(20),
+                                                  color:
+                                                      colorThemes[i + j]['color'],
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
                                                   border: primaryColor ==
                                                           colorThemes[i + j]['color']
                                                       ? Border.all(
                                                           color: Colors.white,
-                                                          width: 3,
-                                                        )
+                                                          width: 3)
                                                       : null,
                                                 ),
                                                 child: Center(
                                                   child: Text(
                                                     colorThemes[i + j]['name'],
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
+                                                    style: textTheme.bodySmall?.copyWith(
                                                       color: colorThemes[i + j]['color']
                                                                   .computeLuminance() >
                                                               0.5
                                                           ? Colors.black
                                                           : Colors.white,
-                                                      fontWeight: FontWeight.w600,
-                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 ),
@@ -290,10 +264,7 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
                                           ),
                                         )
                                       else
-                                        Expanded(child: Container()),
-                                    if ((colorThemes.length - i) < 3)
-                                      for (int k = 0; k < (3 - (colorThemes.length - i)); k++)
-                                        Expanded(child: Container()),
+                                        const Expanded(child: SizedBox()),
                                   ],
                                 ),
                               ),
@@ -305,190 +276,68 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
 
                   const SizedBox(height: 20),
 
-                  // CUSTOM COLOR THEME TITLE
+                  /// CUSTOM COLOR
                   Text(
-                    "Custom Color Theme",
-                    style: TextStyle(
-                      fontSize: 16,
+                    "Custom Color",
+                    style: textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.green[700],
+                      color: colorScheme.primary,
                     ),
                   ),
                   const SizedBox(height: 8),
 
-                  // CUSTOM COLOR THEME SECTION
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEEE9D7),
+                      color: colorScheme.surfaceVariant,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        const SizedBox(height: 16),
+
                         Container(
-                          padding: const EdgeInsets.all(12),
+                          width: 50,
+                          height: 50,
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Row(
-                            children: [
-                              // COLOR PREVIEW
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                        ),
+
+                        const SizedBox(width: 16),
+
+                        Expanded(
+                          child: TextField(
+                            controller: _hexController,
+                            onChanged: (value) {
+                              try {
+                                final hex = value.replaceAll('#', '');
+                                final color =
+                                    Color(int.parse('FF$hex', radix: 16));
+                                _updateThemeColor(color);
+                              } catch (_) {}
+                            },
+                            decoration: InputDecoration(
+                              hintText: "#cddc39",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              const SizedBox(width: 16),
-                              // HEX INPUT
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "HEX Color",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    TextField(
-                                      controller: _hexController,
-                                      onChanged: (value) {
-                                        try {
-                                          if (value.isNotEmpty) {
-                                            final hexColor = value.startsWith('#')
-                                                ? value.substring(1)
-                                                : value;
-                                            final color = Color(
-                                              int.parse('FF$hexColor', radix: 16),
-                                            );
-                                            _updateThemeColor(color);
-                                          }
-                                        } catch (e) {
-                                          // Invalid hex format
-                                        }
-                                      },
-                                      decoration: InputDecoration(
-                                        hintText: "#cddc39",
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey[400],
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                        ),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(horizontal: 12),
-                                        isDense: true,
-                                      ),
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-
-                  const SizedBox(height: 20),
                 ],
               ),
+
               bottomNavigationBar: BottomAppBar(
-                color: isDark ? const Color(0xFF1a1a1a) : const Color(0xFFFFF9E6),
-                elevation: 0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.mail_outline,
-                          color: isDark ? Colors.grey[400] : Colors.black87,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Inbox",
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: isDark ? Colors.grey[400] : Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Stack(
-                          children: [
-                            Icon(
-                              Icons.calendar_today_outlined,
-                              color: isDark ? Colors.grey[400] : Colors.black87,
-                            ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Container(
-                                width: 18,
-                                height: 18,
-                                decoration: const BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    "3",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Calendar",
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: isDark ? Colors.grey[400] : Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.cloud_upload_outlined,
-                          color: isDark ? Colors.grey[400] : Colors.black87,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "Upload",
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: isDark ? Colors.grey[400] : Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
+                  children: const [
+                    _NavItem(icon: Icons.mail_outline, label: "Inbox"),
+                    _NavItem(icon: Icons.calendar_today, label: "Calendar"),
+                    _NavItem(icon: Icons.cloud_upload, label: "Upload"),
                   ],
                 ),
               ),
@@ -496,6 +345,31 @@ class _ColorSkinsPageState extends State<ColorSkinsPage> {
           },
         );
       },
+    );
+  }
+}
+
+/// COMPONENT NAV ITEM (BIAR CLEAN)
+class _NavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  const _NavItem({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: theme.textTheme.bodySmall,
+        ),
+      ],
     );
   }
 }

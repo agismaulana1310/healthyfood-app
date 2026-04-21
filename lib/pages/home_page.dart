@@ -24,7 +24,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final colorScheme = theme.colorScheme;
+
     final List<Widget> pages = [
+      // ================= HOME =================
       SingleChildScrollView(
         child: Column(
           children: const [
@@ -39,17 +44,44 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      const Center(child: Text("Halaman Transaksi")), 
-      const CartPage(), 
-      const Center(child: Text("Halaman Favorit")),  
-      const Center(child: Text("Halaman Profil")), 
+
+      // ================= CATEGORIES / TRANSAKSI =================
+      Center(
+        child: Text(
+          "Halaman Transaksi",
+          style: textTheme.titleMedium?.copyWith(
+            color: colorScheme.onBackground,
+          ),
+        ),
+      ),
+
+      // ================= CART =================
+      const CartPage(),
+
+      // ================= WISHLIST =================
+      Center(
+        child: Text(
+          "Halaman Favorit",
+          style: textTheme.titleMedium?.copyWith(
+            color: colorScheme.onBackground,
+          ),
+        ),
+      ),
+
+      // ================= PROFILE =================
+      Center(
+        child: Text(
+          "Halaman Profil",
+          style: textTheme.titleMedium?.copyWith(
+            color: colorScheme.onBackground,
+          ),
+        ),
+      ),
     ];
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(child: pages[_currentIndex]),
-
       bottomNavigationBar: BottomNav(
         currentIndex: _currentIndex,
         onTap: _onTap,

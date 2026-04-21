@@ -5,60 +5,42 @@ class CategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     final List<Map<String, dynamic>> categories = [
-      {
-        'name': 'Fruits',
-        'items': '87 Items',
-        'icon': Icons.grain,
-      },
-      {
-        'name': 'Vegetables',
-        'items': '24 Items',
-        'icon': Icons.eco,
-      },
-      {
-        'name': 'Mushroom',
-        'items': '43 Items',
-        'icon': Icons.emoji_nature,
-      },
-      {
-        'name': 'Dairy',
-        'items': '22 Items',
-        'icon': Icons.local_drink,
-      },
-      {
-        'name': 'Oats',
-        'items': '64 Items',
-        'icon': Icons.rice_bowl,
-      },
-      {
-        'name': 'Bread',
-        'items': '43 Items',
-        'icon': Icons.bakery_dining,
-      },
-      
+      {'name': 'Fruits', 'items': '87 Items', 'icon': Icons.grain},
+      {'name': 'Vegetables', 'items': '24 Items', 'icon': Icons.eco},
+      {'name': 'Mushroom', 'items': '43 Items', 'icon': Icons.emoji_nature},
+      {'name': 'Dairy', 'items': '22 Items', 'icon': Icons.local_drink},
+      {'name': 'Oats', 'items': '64 Items', 'icon': Icons.rice_bowl},
+      {'name': 'Bread', 'items': '43 Items', 'icon': Icons.bakery_dining},
     ];
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
 
       // ================= APPBAR =================
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: theme.scaffoldBackgroundColor,
         elevation: 0,
 
-        // 🔥 PANAH KIRI → KE WISHLIST
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: colorScheme.onBackground),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
 
         centerTitle: true,
-        title: const Text(
+
+        title: Text(
           'Categories',
-          style: TextStyle(color: Colors.black),
+          style: textTheme.titleLarge?.copyWith(
+            color: colorScheme.onBackground,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
 
@@ -71,33 +53,35 @@ class CategoriesPage extends StatelessWidget {
 
           return GestureDetector(
             onTap: () {
-              // 👉 KE CATEGORY PAGE
               Navigator.pushNamed(
                 context,
                 '/category',
-                arguments: {
-                  'name': item['name'],
-                  'items': item['items'],
-                },
+                arguments: {'name': item['name'], 'items': item['items']},
               );
             },
             child: Container(
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.symmetric(horizontal: 20),
               height: 90,
+
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                gradient: const LinearGradient(
+
+                /// 🔥 GRADIENT DINAMIS (ikut primary color)
+                gradient: LinearGradient(
                   colors: [
-                    Color(0xFF4CAF50),
-                    Color(0xFF66BB6A),
+                    colorScheme.primary,
+                    colorScheme.primary.withOpacity(0.7),
                   ],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ),
+
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withOpacity(
+                      theme.brightness == Brightness.dark ? 0.3 : 0.1,
+                    ),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
@@ -107,42 +91,36 @@ class CategoriesPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // ================= TEXT =================
+                  /// ================= TEXT =================
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         item['name'],
-                        style: const TextStyle(
+                        style: textTheme.titleMedium?.copyWith(
                           color: Colors.white,
-                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         item['items'],
-                        style: const TextStyle(
+                        style: textTheme.bodyMedium?.copyWith(
                           color: Colors.white70,
-                          fontSize: 14,
                         ),
                       ),
                     ],
                   ),
 
-                  // ================= ICON =================
+                  /// ================= ICON =================
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
+                      color: Colors.white.withOpacity(0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
-                      item['icon'],
-                      color: Colors.white,
-                      size: 26,
-                    ),
+                    child: Icon(item['icon'], color: Colors.white, size: 26),
                   ),
                 ],
               ),
