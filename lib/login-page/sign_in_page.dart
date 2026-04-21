@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'create_account_page.dart'; // Impor untuk navigasi ke halaman Register
+import 'create_account_page.dart';
 import 'forget_password_page.dart';
 import '../pages/home_page.dart';
 
@@ -8,97 +8,111 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color primaryGreen = Color(0xFF51B036);
-    const Color darkText = Color(0xFF133F43);
-    // URL Gambar Buah
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     const String loginBgUrl =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtWuGaBnLOhzG4wbUhFxtF9K0_HytXJJQOIA&s';
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
+
       body: Stack(
         children: [
-          // Latar Belakang Gambar
+          /// ================= BACKGROUND =================
           Image.network(
             loginBgUrl,
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
             errorBuilder: (context, error, stackTrace) =>
-                Container(color: Colors.grey[300]),
+                Container(color: colorScheme.surfaceVariant),
           ),
 
-          // Panel Putih Melengkung
+          /// ================= PANEL =================
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
               height: MediaQuery.of(context).size.height * 0.72,
-              padding: const EdgeInsets.all(28.0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+              padding: const EdgeInsets.all(28),
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(32)),
               ),
+
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Header
+
+                    /// ================= HEADER =================
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Sign In',
-                          style: TextStyle(
-                            fontSize: 26,
+                          style: textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.w900,
-                            color: darkText,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         IconButton(
                           icon: Icon(
                             Icons.cancel,
-                            color: Colors.blueGrey.shade800,
-                            size: 30,
+                            color: colorScheme.onSurface,
                           ),
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: () => Navigator.pop(context),
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 32),
 
-                    // Input Fields
-                    _buildInput(hint: 'Enter your email'),
+                    /// ================= INPUT =================
+                    _buildInput(
+                      context,
+                      hint: 'Enter your email',
+                    ),
+
                     const SizedBox(height: 16),
 
-                    _buildInput(hint: 'Enter your password', isPassword: true),
+                    _buildInput(
+                      context,
+                      hint: 'Enter your password',
+                      isPassword: true,
+                    ),
+
                     const SizedBox(height: 16),
 
-                    // Lupa Password
-                    // Lupa Password
+                    /// ================= FORGOT =================
                     Center(
                       child: TextButton(
                         onPressed: () {
-                          // Navigasi ke halaman Forget Password
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ForgetPasswordPage(),
+                              builder: (context) =>
+                                  const ForgetPasswordPage(),
                             ),
                           );
                         },
                         child: Text(
                           'Forgot Password?',
-                          style: TextStyle(
-                            color: primaryGreen,
-                            fontSize: 15,
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
 
-                    // Tombol
+                    const SizedBox(height: 8),
+
+                    /// ================= BUTTON SIGN IN =================
                     _buildButton(
+                      context,
                       text: 'SIGN IN',
                       onPressed: () {
                         Navigator.push(
@@ -108,18 +122,24 @@ class SignInPage extends StatelessWidget {
                           ),
                         );
                       },
-                      color: primaryGreen,
                     ),
+
                     const SizedBox(height: 16),
+
+                    /// ================= BUTTON REGISTER =================
                     _buildButton(
+                      context,
                       text: 'CREATE AN ACCOUNT',
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CreateAccountPage(),
-                        ),
-                      ),
-                      color: primaryGreen,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const CreateAccountPage(),
+                          ),
+                        );
+                      },
+                      isOutline: true,
                     ),
                   ],
                 ),
@@ -131,53 +151,79 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  // Widget Pembantu untuk mengurangi kode berulang
-  Widget _buildInput({required String hint, bool isPassword = false}) {
+  /// ================= INPUT =================
+  Widget _buildInput(BuildContext context,
+      {required String hint, bool isPassword = false}) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return TextFormField(
       obscureText: isPassword,
+      style: TextStyle(color: colorScheme.onSurface),
+
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 18,
+        hintStyle: TextStyle(
+          color: colorScheme.onSurface.withOpacity(0.5),
         ),
+
+        filled: true,
+        fillColor: colorScheme.surfaceVariant,
+
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: BorderSide.none,
         ),
+
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: Color(0xFF51B036), width: 2),
+          borderSide: BorderSide(
+            color: colorScheme.primary,
+            width: 2,
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildButton({
+  /// ================= BUTTON =================
+  Widget _buildButton(
+    BuildContext context, {
     required String text,
     required VoidCallback onPressed,
-    required Color color,
+    bool isOutline = false,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return SizedBox(
       width: double.infinity,
       height: 56,
       child: ElevatedButton(
         onPressed: onPressed,
+
         style: ElevatedButton.styleFrom(
-          backgroundColor: color,
+          backgroundColor:
+              isOutline ? Colors.transparent : colorScheme.primary,
+          foregroundColor:
+              isOutline ? colorScheme.primary : Colors.white,
+          side: isOutline
+              ? BorderSide(color: colorScheme.primary)
+              : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           elevation: 0,
         ),
+
         child: Text(
           text,
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
-            letterSpacing: 1.0,
+            letterSpacing: 1,
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../pages/cart_page.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -13,6 +14,10 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
@@ -20,19 +25,17 @@ class _DetailPageState extends State<DetailPage> {
     final String price = args['price'];
     final String image = args['image'];
 
-    final double priceValue =
-        double.parse(price.replaceAll('\$', ''));
+    final double priceValue = double.parse(price.replaceAll('\$', ''));
 
     final double totalPrice = priceValue * quantity;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
 
-      // ================= BODY =================
       body: SafeArea(
         child: Column(
           children: [
-            // ================= IMAGE =================
+            /// ================= IMAGE =================
             Stack(
               children: [
                 SizedBox(
@@ -45,10 +48,9 @@ class _DetailPageState extends State<DetailPage> {
                   top: 10,
                   left: 16,
                   child: CircleAvatar(
-                    backgroundColor: Colors.black26,
+                    backgroundColor: Colors.black.withOpacity(0.3),
                     child: IconButton(
-                      icon: const Icon(Icons.arrow_back,
-                          color: Colors.white),
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
@@ -58,10 +60,9 @@ class _DetailPageState extends State<DetailPage> {
                   top: 10,
                   right: 16,
                   child: CircleAvatar(
-                    backgroundColor: Colors.black26,
+                    backgroundColor: Colors.black.withOpacity(0.3),
                     child: IconButton(
-                      icon:
-                          const Icon(Icons.share, color: Colors.white),
+                      icon: const Icon(Icons.share, color: Colors.white),
                       onPressed: () {},
                     ),
                   ),
@@ -69,30 +70,29 @@ class _DetailPageState extends State<DetailPage> {
               ],
             ),
 
-            // ================= CONTENT =================
+            /// ================= CONTENT =================
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(30),
                   ),
                 ),
 
                 child: Column(
                   children: [
-                    // ================= SCROLL AREA =================
+                    /// SCROLL AREA
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'FRUITS',
-                              style: TextStyle(
-                                color: Colors.grey,
+                              style: textTheme.labelMedium?.copyWith(
+                                color: colorScheme.outline,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -101,38 +101,38 @@ class _DetailPageState extends State<DetailPage> {
 
                             Text(
                               name,
-                              style: const TextStyle(
-                                fontSize: 22,
+                              style: textTheme.titleLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
+                                color: colorScheme.onSurface,
                               ),
                             ),
 
                             const SizedBox(height: 10),
 
-                            // PRICE + QTY
+                            /// PRICE + QTY
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '\$${priceValue.toStringAsFixed(1)}',
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.green,
+                                  style: textTheme.titleMedium?.copyWith(
+                                    color: colorScheme.primary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
 
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    borderRadius:
-                                        BorderRadius.circular(20),
+                                    color: colorScheme.surfaceVariant,
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Row(
                                     children: [
                                       IconButton(
-                                        icon: const Icon(Icons.remove),
+                                        icon: Icon(
+                                          Icons.remove,
+                                          color: colorScheme.onSurface,
+                                        ),
                                         onPressed: () {
                                           setState(() {
                                             if (quantity > 1) {
@@ -141,9 +141,17 @@ class _DetailPageState extends State<DetailPage> {
                                           });
                                         },
                                       ),
-                                      Text('$quantity'),
+                                      Text(
+                                        '$quantity',
+                                        style: TextStyle(
+                                          color: colorScheme.onSurface,
+                                        ),
+                                      ),
                                       IconButton(
-                                        icon: const Icon(Icons.add),
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: colorScheme.onSurface,
+                                        ),
                                         onPressed: () {
                                           setState(() {
                                             quantity++;
@@ -158,43 +166,42 @@ class _DetailPageState extends State<DetailPage> {
 
                             const SizedBox(height: 10),
 
-                            // RATING
-                            const Row(
+                            /// RATING
+                            Row(
                               children: [
-                                Icon(Icons.star,
-                                    color: Colors.orange),
-                                SizedBox(width: 5),
+                                const Icon(Icons.star, color: Colors.orange),
+                                const SizedBox(width: 5),
                                 Text(
                                   '4.5',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.bold,
+                                    color: colorScheme.onSurface,
+                                  ),
                                 ),
-                                SizedBox(width: 5),
+                                const SizedBox(width: 5),
                                 Text(
                                   '(128 reviews)',
-                                  style:
-                                      TextStyle(color: Colors.grey),
+                                  style: TextStyle(color: colorScheme.outline),
                                 ),
                               ],
                             ),
 
                             const SizedBox(height: 20),
 
-                            // ================= TAB =================
+                            /// TAB
                             Row(
                               children: [
-                                _buildTab('Description', 0),
-                                _buildTab('Review', 1),
-                                _buildTab('Discussion', 2),
+                                _buildTab(context, 'Description', 0),
+                                _buildTab(context, 'Review', 1),
+                                _buildTab(context, 'Discussion', 2),
                               ],
                             ),
 
                             const SizedBox(height: 10),
 
-                            // ================= CONTENT =================
-                            if (selectedTab == 0) _description(),
-                            if (selectedTab == 1) _review(),
-                            if (selectedTab == 2) _discussion(),
+                            if (selectedTab == 0) _description(colorScheme),
+                            if (selectedTab == 1) _review(colorScheme),
+                            if (selectedTab == 2) _discussion(colorScheme),
 
                             const SizedBox(height: 20),
                           ],
@@ -202,31 +209,41 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
 
-                    // ================= BUTTON (FIXED) =================
+                    /// BUTTON
                     Row(
                       children: [
                         Container(
+                          height: 50,
                           width: 60,
-                          height: 60,
                           decoration: BoxDecoration(
                             color: Colors.pink,
-                            borderRadius:
-                                BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Icon(Icons.favorite,
-                              color: Colors.white),
+                          child: const Icon(
+                            Icons.favorite,
+                            color: Colors.white,
+                          ),
                         ),
 
-                        const SizedBox(width: 16),
+                        const SizedBox(width: 10),
 
                         Expanded(
-                          child: Container(
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius:
-                                  BorderRadius.circular(15),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              minimumSize: const Size(double.infinity, 50),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const CartPage(),
+                                ),
+                              );
+                            },
                             child: Center(
                               child: Text(
                                 'ADD TO CART  \$${totalPrice.toStringAsFixed(1)}',
@@ -239,7 +256,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -250,8 +267,10 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  // ================= TAB =================
-  Widget _buildTab(String title, int index) {
+  /// TAB
+  Widget _buildTab(BuildContext context, String title, int index) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -266,8 +285,8 @@ class _DetailPageState extends State<DetailPage> {
               title,
               style: TextStyle(
                 color: selectedTab == index
-                    ? Colors.black
-                    : Colors.grey,
+                    ? colorScheme.primary
+                    : colorScheme.outline,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -276,74 +295,33 @@ class _DetailPageState extends State<DetailPage> {
               height: 2,
               width: 60,
               color: selectedTab == index
-                  ? Colors.green
+                  ? colorScheme.primary
                   : Colors.transparent,
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
-  // ================= DESCRIPTION =================
-  Widget _description() {
-    return const Text(
-      'Buah yang menyehatkan dan menyegarkan dengan kandungan vitamin yang di butuhkan oleh tubuh.',
-      style: TextStyle(color: Colors.grey),
+  Widget _description(ColorScheme colorScheme) {
+    return Text(
+      'Buah yang menyehatkan dan menyegarkan.',
+      style: TextStyle(color: colorScheme.outline),
     );
   }
 
-  // ================= REVIEW =================
-  Widget _review() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            const CircleAvatar(
-              backgroundImage:
-                  NetworkImage('https://i.pravatar.cc/150?img=3'),
-            ),
-            const SizedBox(width: 10),
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('James Logan',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold)),
-                Text('27 August 2020',
-                    style: TextStyle(color: Colors.grey)),
-              ],
-            ),
-            const Spacer(),
-            Row(
-              children: const [
-                Icon(Icons.star,
-                    color: Colors.orange, size: 16),
-                Icon(Icons.star,
-                    color: Colors.orange, size: 16),
-                Icon(Icons.star,
-                    color: Colors.orange, size: 16),
-                Icon(Icons.star,
-                    color: Colors.orange, size: 16),
-                Icon(Icons.star_border, size: 16),
-              ],
-            )
-          ],
-        ),
-        const SizedBox(height: 10),
-        const Text(
-          'Buah dengan kualitas premium.',
-          style: TextStyle(color: Colors.grey),
-        )
-      ],
+  Widget _review(ColorScheme colorScheme) {
+    return Text(
+      'Buah dengan kualitas premium.',
+      style: TextStyle(color: colorScheme.outline),
     );
   }
 
-  // ================= DISCUSSION =================
-  Widget _discussion() {
-    return const Text(
+  Widget _discussion(ColorScheme colorScheme) {
+    return Text(
       'Belum ada diskusi.',
-      style: TextStyle(color: Colors.grey),
+      style: TextStyle(color: colorScheme.outline),
     );
   }
 }

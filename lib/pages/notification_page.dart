@@ -5,21 +5,32 @@ class NotificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+
+      // ================= APPBAR =================
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: theme.scaffoldBackgroundColor,
         elevation: 0,
+
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.grey.shade300, width: 1.5),
+              border: Border.all(
+                color: colorScheme.outline.withOpacity(0.3),
+                width: 1.5,
+              ),
             ),
             child: IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back,
-                color: Color(0xFF2D3748),
+                color: colorScheme.onBackground,
                 size: 20,
               ),
               onPressed: () {
@@ -28,38 +39,38 @@ class NotificationPage extends StatelessWidget {
             ),
           ),
         ),
-        title: const Text(
+
+        title: Text(
           'Notifications',
-          style: TextStyle(
-            color: Color(0xFF2D3748),
-            fontSize: 20,
+          style: textTheme.titleLarge?.copyWith(
+            color: colorScheme.onBackground,
             fontWeight: FontWeight.bold,
           ),
         ),
+
         centerTitle: true,
       ),
+
+      // ================= BODY =================
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         children: const [
           NotificationCard(
             title: 'Apply Success',
-            description:
-                'You has apply an job in Queenify Group as UI Designer',
+            description: 'You has apply a job in Queenify Group as UI Designer',
             time: '10h ago',
-            dotColor: Color(0xFF2DD4BF), // Warna Cyan
+            dotColor: Color(0xFF2DD4BF),
           ),
           NotificationCard(
             title: 'Interview Calls',
             description: 'Congratulations! You have interview calls',
             time: '9h ago',
-            // Tanpa dot indicator
           ),
           NotificationCard(
             title: 'Apply Success',
-            description:
-                'You has apply an job in Queenify Group as UI Designer',
+            description: 'You has apply a job in Queenify Group as UI Designer',
             time: '8h ago',
-            dotColor: Color(0xFF4ADE80), // Warna Hijau
+            dotColor: Color(0xFF4ADE80),
           ),
           NotificationCard(
             title: 'Complete your profile',
@@ -74,7 +85,7 @@ class NotificationPage extends StatelessWidget {
   }
 }
 
-// === WIDGET KARTU NOTIFIKASI ===
+// ================= CARD =================
 class NotificationCard extends StatelessWidget {
   final String title;
   final String description;
@@ -91,26 +102,33 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
+
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
+
         boxShadow: [
           BoxShadow(
-            // ignore: deprecated_member_use
-            color: Colors.grey.withOpacity(0.05),
-            spreadRadius: 2,
+            color: Colors.black.withOpacity(
+              theme.brightness == Brightness.dark ? 0.3 : 0.05,
+            ),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Baris Judul & Indikator
+          /// ================= TITLE =================
           Row(
             children: [
               if (dotColor != null) ...[
@@ -118,7 +136,7 @@ class NotificationCard extends StatelessWidget {
                   width: 10,
                   height: 10,
                   decoration: BoxDecoration(
-                    color: dotColor,
+                    color: dotColor ?? colorScheme.primary,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -127,62 +145,59 @@ class NotificationCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1A202C),
+                    color: colorScheme.onSurface,
                   ),
                 ),
               ),
             ],
           ),
+
           const SizedBox(height: 8),
 
-          // Teks Deskripsi
+          /// ================= DESCRIPTION =================
           Text(
             description,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF4A5568),
+            style: textTheme.bodyMedium?.copyWith(
+              color: colorScheme.onSurface.withOpacity(0.7),
               height: 1.4,
             ),
           ),
+
           const SizedBox(height: 16),
 
-          // Baris Bawah (Waktu & Tombol Mark as Read)
+          /// ================= FOOTER =================
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Bagian Waktu
+              /// TIME
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.access_time,
                     size: 16,
-                    color: Color(0xFFA0AEC0),
+                    color: colorScheme.onSurface.withOpacity(0.5),
                   ),
                   const SizedBox(width: 6),
                   Text(
                     time,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFFA0AEC0),
-                      fontWeight: FontWeight.w500,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurface.withOpacity(0.5),
                     ),
                   ),
                 ],
               ),
 
-              // Tombol Mark as read
+              /// MARK AS READ
               GestureDetector(
                 onTap: () {
-                  // Aksi ketika di klik "Mark as read"
+                  // TODO: action
                 },
-                child: const Text(
+                child: Text(
                   'Mark as read',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF48BB78), // Warna hijau untuk teks
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.primary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

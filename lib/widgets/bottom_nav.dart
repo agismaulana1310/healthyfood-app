@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import '../categories-page/categories_page.dart';
 import '../categories-page/wishlist_page.dart';

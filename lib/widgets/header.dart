@@ -7,17 +7,25 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          /// ================= TEXT =================
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 "Good Morning",
-                style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey),
+                style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  color: textTheme.bodySmall?.color?.withOpacity(0.7),
+                ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -25,11 +33,13 @@ class Header extends StatelessWidget {
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
+                  color: textTheme.titleMedium?.color,
                 ),
               ),
             ],
           ),
 
+          /// ================= NOTIFICATION =================
           MouseRegion(
             cursor: SystemMouseCursors.click,
             child: Material(
@@ -44,28 +54,32 @@ class Header extends StatelessWidget {
                     ),
                   );
                 },
-                hoverColor: Colors.transparent,
-                splashColor: Colors.transparent,
+
+                /// 👉 pakai warna theme
+                hoverColor: colorScheme.primary.withOpacity(0.1),
+                splashColor: colorScheme.primary.withOpacity(0.2),
                 highlightColor: Colors.transparent,
 
                 child: Padding(
-                  padding: const EdgeInsets.all(
-                    6,
-                  ),
+                  padding: const EdgeInsets.all(6),
                   child: Stack(
                     children: [
-                      const Icon(
+                      /// ICON
+                      Icon(
                         Icons.notifications_none,
-                        color: Colors.black,
+                        color: colorScheme.onBackground,
                         size: 24,
                       ),
+
+                      /// DOT NOTIFICATION
                       Positioned(
                         right: 0,
+                        top: 0,
                         child: Container(
                           width: 8,
                           height: 8,
-                          decoration: const BoxDecoration(
-                            color: Colors.green,
+                          decoration: BoxDecoration(
+                            color: colorScheme.primary,
                             shape: BoxShape.circle,
                           ),
                         ),

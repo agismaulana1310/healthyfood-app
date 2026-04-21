@@ -23,27 +23,31 @@ class _CategoryPageState extends State<CategoryPage> {
       'name': 'Broccoli',
       'price': '\$8.7',
       'image':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj-tiBKMEOi6IlBI31zKf-k9mpgAOceezDaA&s',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj-tiBKMEOi6IlBI31zKf-k9mpgAOceezDaA&s',
       'isFavorite': false,
     },
     {
       'name': 'Tomatoes',
       'price': '\$4.9',
       'image':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0YYiMyh3OM_g_6HQlEDQ_2Eh6ksCg9-tyGQ&s',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0YYiMyh3OM_g_6HQlEDQ_2Eh6ksCg9-tyGQ&s',
       'isFavorite': false,
     },
     {
       'name': 'Grapes',
       'price': '\$7.2',
       'image':
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWNS0ut2GrjHs7fo9UZ9CrJHcsO9DmRXoAiA&s',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWNS0ut2GrjHs7fo9UZ9CrJHcsO9DmRXoAiA&s',
       'isFavorite': false,
     },
   ];
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
 
@@ -51,43 +55,40 @@ class _CategoryPageState extends State<CategoryPage> {
     final String totalItems = args?['items'] ?? '87 items';
 
     final filteredProducts = products.where((product) {
-      return product['name']
-          .toLowerCase()
-          .contains(searchQuery.toLowerCase());
+      return product['name'].toLowerCase().contains(searchQuery.toLowerCase());
     }).toList();
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
 
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // ================= HEADER =================
+            /// ================= HEADER =================
             Container(
               height: 180,
-              padding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-              decoration: const BoxDecoration(
-                color: Color(0xFF4CAF50),
-                borderRadius: BorderRadius.vertical(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              decoration: BoxDecoration(
+                color: colorScheme.primary,
+                borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(25),
                 ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // ICON ATAS
+                  /// ICONS
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // BACK
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
-                        child:
-                            const Icon(Icons.arrow_back, color: Colors.white),
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
                       ),
 
-                      // TUNE → KEMBALI KE CATEGORIES
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -106,22 +107,21 @@ class _CategoryPageState extends State<CategoryPage> {
 
                   Text(
                     '$categoryName Category',
-                    style: const TextStyle(
+                    style: textTheme.titleMedium?.copyWith(
                       color: Colors.white,
-                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
 
                   Text(
                     totalItems,
-                    style: const TextStyle(color: Colors.white70),
+                    style: textTheme.bodySmall?.copyWith(color: Colors.white70),
                   ),
                 ],
               ),
             ),
 
-            // ================= SEARCH =================
+            /// ================= SEARCH =================
             Padding(
               padding: const EdgeInsets.all(16),
               child: TextField(
@@ -130,12 +130,21 @@ class _CategoryPageState extends State<CategoryPage> {
                     searchQuery = value;
                   });
                 },
+                style: TextStyle(color: colorScheme.onSurface),
+
                 decoration: InputDecoration(
                   hintText: 'Search here',
-                  prefixIcon: const Icon(Icons.search),
+                  hintStyle: TextStyle(
+                    color: colorScheme.onSurface.withOpacity(0.5),
+                  ),
+
+                  prefixIcon: Icon(Icons.search, color: colorScheme.onSurface),
+
                   filled: true,
-                  fillColor: Colors.grey[200],
+                  fillColor: colorScheme.surfaceVariant,
+
                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
+
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
                     borderSide: BorderSide.none,
@@ -144,7 +153,7 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
             ),
 
-            // ================= GRID =================
+            /// ================= GRID =================
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -169,23 +178,22 @@ class _CategoryPageState extends State<CategoryPage> {
                   ),
                   child: Stack(
                     children: [
-                      // OVERLAY
+                      /// OVERLAY
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Colors.black.withOpacity(0.25),
+                          color: Colors.black.withOpacity(0.3),
                         ),
                       ),
 
-                      // LOVE BUTTON
+                      /// FAVORITE
                       Positioned(
                         top: 10,
                         left: 10,
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              product['isFavorite'] =
-                                  !product['isFavorite'];
+                              product['isFavorite'] = !product['isFavorite'];
                             });
                           },
                           child: Icon(
@@ -197,7 +205,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         ),
                       ),
 
-                      // TEXT (CLICKABLE)
+                      /// TEXT
                       Positioned(
                         bottom: 15,
                         left: 12,
@@ -214,15 +222,14 @@ class _CategoryPageState extends State<CategoryPage> {
                             children: [
                               Text(
                                 product['name'],
-                                style: const TextStyle(
+                                style: textTheme.titleSmall?.copyWith(
                                   color: Colors.white,
-                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
                                 product['price'],
-                                style: const TextStyle(
+                                style: textTheme.bodySmall?.copyWith(
                                   color: Colors.white70,
                                 ),
                               ),

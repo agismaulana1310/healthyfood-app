@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../theme/theme_controller.dart';
 import '../../widgets/profile/profile_menu_item.dart';
 import '../../widgets/routes/bottom_to_top_route.dart';
 import 'profile_detail_page.dart';

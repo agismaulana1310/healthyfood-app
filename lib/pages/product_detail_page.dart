@@ -3,12 +3,14 @@ import '../widgets/quantity_selector.dart';
 import '../widgets/rating_section.dart';
 import '../widgets/tab_section.dart';
 import '../widgets/review_item.dart';
+import 'cart_page.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final String name;
   final double price;
   final String image;
   final String description;
+  final String category;
 
   const ProductDetailPage({
     super.key,
@@ -16,6 +18,7 @@ class ProductDetailPage extends StatefulWidget {
     required this.price,
     required this.image,
     required this.description,
+    this.category = "FRUITS",
   });
 
   @override
@@ -28,11 +31,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
+            // ================= IMAGE =================
             Stack(
               children: [
                 Image.network(
@@ -40,6 +46,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   height: 280,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    height: 280,
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.image, size: 50),
+                  ),
                 ),
 
                 Positioned(
@@ -55,36 +66,41 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ],
             ),
 
-            // 🔥 CONTENT
+            // ================= CONTENT =================
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                decoration: BoxDecoration(
+                  color: theme.cardColor, // 🔥 support dark mode
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("FRUITS", style: TextStyle(color: Colors.grey)),
+                    Text(
+                      widget.category.toUpperCase(),
+                      style: TextStyle(color: Colors.grey),
+                    ),
 
                     const SizedBox(height: 5),
 
                     Text(
                       widget.name,
-                      style: const TextStyle(
-                        fontSize: 24,
+                      style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
 
                     const SizedBox(height: 10),
 
+                    // PRICE + QTY
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "\$${widget.price}",
+                          "\$${widget.price.toStringAsFixed(1)}",
                           style: const TextStyle(
                             color: Colors.green,
                             fontSize: 22,
@@ -114,6 +130,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
                     const SizedBox(height: 15),
 
+                    // ================= TAB =================
                     TabSection(
                       selectedTab: selectedTab,
                       onTap: (i) {
@@ -125,6 +142,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
                     const SizedBox(height: 15),
 
+                    // ================= CONTENT =================
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
@@ -133,7 +151,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             if (selectedTab == 0)
                               Text(
                                 widget.description,
-                                style: TextStyle(color: Colors.grey),
+                                style: const TextStyle(color: Colors.grey),
                               ),
 
                             if (selectedTab == 1) ...[
@@ -141,23 +159,25 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 name: "James Logan",
                                 date: "27 August 2020",
                                 comment:
-                                    "mantap banget, rasanya enak dan segar. Recomended!",
+                                    "mantap banget, rasanya enak dan segar. Recommended!",
                                 rating: 4,
-                                image: "https://plus.unsplash.com/premium_photo-1669704099116-a325b4d6186f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHBlb3BsZSUyMHNtaWxlfGVufDB8fDB8fHww",
+                                image:
+                                    "https://plus.unsplash.com/premium_photo-1669704099116-a325b4d6186f",
                               ),
                               const ReviewItem(
                                 name: "Leo Tucker",
                                 date: "15 June 2020",
                                 comment:
-                                    "ga bosen buat dimakan, apalagi pas panas-panas. Seger banget!",
+                                    "ga bosen dimakan, apalagi pas panas. Seger banget!",
                                 rating: 5,
-                                image: "https://images.unsplash.com/photo-1517677129300-07b130802f46?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHBlb3BsZSUyMHNtaWxlfGVufDB8fDB8fHww",
+                                image:
+                                    "https://images.unsplash.com/photo-1517677129300-07b130802f46",
                               ),
-                            ],  
+                            ],
 
                             if (selectedTab == 2)
                               const Text(
-                                "Discussion content here...",
+                                "Belum ada diskusi.",
                                 style: TextStyle(color: Colors.grey),
                               ),
                           ],
@@ -167,7 +187,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
                     const SizedBox(height: 10),
 
-                    // 🔥 BUTTON
+                    // ================= BUTTON =================
                     Row(
                       children: [
                         Container(
@@ -186,7 +206,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         const SizedBox(width: 10),
 
                         Expanded(
-                         child: ElevatedButton(
+                          child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green,
                               minimumSize: const Size(double.infinity, 50),
@@ -195,11 +215,21 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.pop(context); // 🔥 balik ke cart
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const CartPage(),
+                                ),
+                              );
                             },
-                            child: Text(
-                              "ADD TO CART \$${(widget.price * qty).toStringAsFixed(1)}",
-                              style: const TextStyle(fontSize: 16),
+                            child: Center(
+                              child: Text(
+                                "ADD TO CART \$${(widget.price * qty).toStringAsFixed(1)}",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),

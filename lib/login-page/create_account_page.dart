@@ -6,95 +6,97 @@ class CreateAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color primaryGreen = Color(0xFF51B036);
-    const Color darkText = Color(0xFF133F43);
-    // URL Gambar Sayuran
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     const String registerBgUrl =
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV8MLo1xl4P1enWfUkPKUlko5edOI9W7lhGw&s';
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
+
       body: Stack(
         children: [
-          // Latar Belakang Gambar
+          /// ================= BACKGROUND =================
           Image.network(
             registerBgUrl,
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
             errorBuilder: (context, error, stackTrace) =>
-                Container(color: Colors.grey[300]),
+                Container(color: colorScheme.surfaceVariant),
           ),
 
-          // Panel Putih Melengkung
+          /// ================= PANEL =================
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height:
-                  MediaQuery.of(context).size.height *
-                  0.78, // Sedikit lebih tinggi
-              padding: const EdgeInsets.all(28.0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+              height: MediaQuery.of(context).size.height * 0.78,
+              padding: const EdgeInsets.all(28),
+              decoration: BoxDecoration(
+                color: colorScheme.surface,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(32),
+                ),
               ),
+
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Header
+                    /// ================= HEADER =================
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Create your account',
-                          style: TextStyle(
-                            fontSize: 26,
+                          style: textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.w900,
-                            color: darkText,
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         IconButton(
                           icon: Icon(
                             Icons.cancel,
-                            color: Colors.blueGrey.shade800,
-                            size: 30,
+                            color: colorScheme.onSurface,
                           ),
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: () => Navigator.pop(context),
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 32),
 
-                    // Input Fields
+                    /// ================= INPUT =================
+                    _buildInput(context, hint: 'Enter your email'),
                     const SizedBox(height: 16),
 
-                    const SizedBox(height: 8),
-                    _buildInput(hint: 'Enter your email'),
+                    _buildInput(
+                      context,
+                      hint: 'Enter your password',
+                      isPassword: true,
+                    ),
                     const SizedBox(height: 16),
 
-                    const SizedBox(height: 8),
-                    _buildInput(hint: 'Enter your password', isPassword: true),
-                    const SizedBox(height: 16),
-
-                    // Teks Syarat & Ketentuan
+                    /// ================= TERMS =================
                     Center(
                       child: TextButton(
                         onPressed: () {},
                         child: Text(
-                          'By tapping Sign up you accept all terms and condition',
+                          'By tapping Sign up you accept all terms and conditions',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: primaryGreen,
-                            fontSize: 14,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colorScheme.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 24),
 
-                    // Tombol
+                    /// ================= BUTTON =================
                     SizedBox(
                       width: double.infinity,
                       height: 56,
@@ -108,7 +110,7 @@ class CreateAccountPage extends StatelessWidget {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryGreen,
+                          backgroundColor: colorScheme.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
@@ -120,7 +122,7 @@ class CreateAccountPage extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            letterSpacing: 1.0,
+                            letterSpacing: 1,
                           ),
                         ),
                       ),
@@ -135,24 +137,39 @@ class CreateAccountPage extends StatelessWidget {
     );
   }
 
-  // Widget Pembantu untuk mengurangi kode berulang
-  Widget _buildInput({required String hint, bool isPassword = false}) {
+  /// ================= INPUT =================
+  Widget _buildInput(
+    BuildContext context, {
+    required String hint,
+    bool isPassword = false,
+  }) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return TextFormField(
       obscureText: isPassword,
+      style: TextStyle(color: colorScheme.onSurface),
+
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: Colors.grey),
+        hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.5)),
+
+        filled: true,
+        fillColor: colorScheme.surfaceVariant,
+
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 18,
         ),
+
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderSide: BorderSide.none,
         ),
+
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: Color(0xFF51B036), width: 2),
+          borderSide: BorderSide(color: colorScheme.primary, width: 2),
         ),
       ),
     );

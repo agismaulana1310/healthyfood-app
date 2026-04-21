@@ -24,27 +24,34 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              // 🔙 HEADER
+              // ================= HEADER =================
               Row(
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: const Icon(Icons.arrow_back),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: colorScheme.onBackground,
+                    ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Center(
                       child: Text(
                         "Checkout",
-                        style: TextStyle(
-                          fontSize: 20,
+                        style: textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
+                          color: colorScheme.onBackground,
                         ),
                       ),
                     ),
@@ -55,27 +62,34 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
               const SizedBox(height: 25),
 
-              // 🔥 STEP INDICATOR
+              // ================= STEP INDICATOR =================
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      circle(true),
+                      circle(true, colorScheme),
                       const SizedBox(width: 8),
-                      Expanded(child: line(true)),
+                      Expanded(child: line(true, colorScheme)),
                       const SizedBox(width: 8),
-                      circle(false),
+                      circle(false, colorScheme),
                     ],
                   ),
                   const SizedBox(height: 6),
                   Row(
-                    children: const [
-                      Text("Shipping Address"),
-                      Spacer(),
+                    children: [
+                      Text(
+                        "Shipping Address",
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onBackground,
+                        ),
+                      ),
+                      const Spacer(),
                       Text(
                         "Payment Method",
-                        style: TextStyle(color: Colors.grey),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: theme.hintColor,
+                        ),
                       ),
                     ],
                   ),
@@ -84,40 +98,45 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
               const SizedBox(height: 25),
 
-              // 🔥 FORM
+              // ================= FORM =================
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      input("Full Name", "Ujang Kosim"),
-                      input("Email Address", "info@example.com"),
-                      input("Phone", "Enter your phone number"),
+                      input(context, "Full Name", "Ujang Kosim"),
+                      input(context, "Email Address", "info@example.com"),
+                      input(context, "Phone", "Enter your phone number"),
 
                       Row(
                         children: [
-                          Expanded(child: input("Zip Code", "Enter here")),
+                          Expanded(child: input(context, "Zip Code", "Enter here")),
                           const SizedBox(width: 12),
-                          Expanded(child: input("City", "Enter here")),
+                          Expanded(child: input(context, "City", "Enter here")),
                         ],
                       ),
 
-                      // 🔥 DROPDOWN COUNTRY (FIXED)
+                      // ================= DROPDOWN =================
                       Padding(
                         padding: const EdgeInsets.only(bottom: 18),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Country"),
+                            Text("Country",
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: colorScheme.onBackground,
+                                )),
                             const SizedBox(height: 6),
 
                             DropdownButtonFormField<String>(
-                              initialValue: countries.contains(selectedCountry)
+                              value: countries.contains(selectedCountry)
                                   ? selectedCountry
                                   : null,
 
+                              dropdownColor: theme.cardColor,
+
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: theme.cardColor,
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 14,
                                   vertical: 14,
@@ -131,7 +150,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               items: countries.map((country) {
                                 return DropdownMenuItem(
                                   value: country,
-                                  child: Text(country),
+                                  child: Text(
+                                    country,
+                                    style: TextStyle(
+                                      color: colorScheme.onSurface,
+                                    ),
+                                  ),
                                 );
                               }).toList(),
 
@@ -151,13 +175,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         children: [
                           Checkbox(
                             value: saveAddress,
+                            activeColor: colorScheme.primary,
                             onChanged: (val) {
                               setState(() {
                                 saveAddress = val!;
                               });
                             },
                           ),
-                          const Text("Save shipping address"),
+                          Text(
+                            "Save shipping address",
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onBackground,
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -167,19 +197,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
               const SizedBox(height: 10),
 
-              // 🔥 BUTTON
+              // ================= BUTTON =================
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                 onPressed: () {
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => const PaymentPage()),
@@ -195,20 +225,26 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  // 🔘 INPUT FIELD
-  Widget input(String label, String hint) {
+  // ================= INPUT =================
+  Widget input(BuildContext context, String label, String hint) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label),
+          Text(label,
+              style: TextStyle(color: colorScheme.onBackground)),
           const SizedBox(height: 6),
           TextField(
+            style: TextStyle(color: colorScheme.onSurface),
             decoration: InputDecoration(
               hintText: hint,
+              hintStyle: TextStyle(color: theme.hintColor),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: theme.cardColor,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 14,
                 vertical: 14,
@@ -224,23 +260,25 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  // 🔵 CIRCLE
-  Widget circle(bool active) {
+  // ================= STEP CIRCLE =================
+  Widget circle(bool active, ColorScheme colorScheme) {
     return Container(
       width: 22,
       height: 22,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: active ? Colors.green : Colors.grey.shade300,
+          color: active
+              ? colorScheme.primary
+              : colorScheme.outline,
           width: 2,
         ),
       ),
       child: active
           ? Container(
               margin: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                color: Colors.green,
+              decoration: BoxDecoration(
+                color: colorScheme.primary,
                 shape: BoxShape.circle,
               ),
             )
@@ -248,11 +286,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  // ➖ LINE
-  Widget line(bool active) {
+  // ================= STEP LINE =================
+  Widget line(bool active, ColorScheme colorScheme) {
     return Container(
       height: 2,
-      color: active ? Colors.green : Colors.grey.shade300,
+      color: active
+          ? colorScheme.primary
+          : colorScheme.outline,
     );
   }
 }
