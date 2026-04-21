@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'product_card.dart';
+import '../categories-page/category_page.dart';
 
 class Trending extends StatelessWidget {
   const Trending({super.key});
@@ -29,15 +30,40 @@ class Trending extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Trending Deals",
-                style: TextStyle(fontWeight: FontWeight.w600),
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(10),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CategoryPage(),
+                    ),
+                  );
+                },
+
+                hoverColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Trending Deals",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      Icon(Icons.arrow_forward, color: Colors.green),
+                    ],
+                  ),
+                ),
               ),
-              Icon(Icons.arrow_forward, color: Colors.green),
-            ],
+            ),
           ),
 
           const SizedBox(height: 12),
@@ -67,7 +93,12 @@ class Trending extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CategoryPage()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 elevation: 0,

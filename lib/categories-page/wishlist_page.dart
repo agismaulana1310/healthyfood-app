@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import '../widgets/bottom_nav.dart';
+import '../../categories-page/categories_page.dart';
+import '../pages/cart_page.dart';
+import '../pages/home_page.dart';
+import '../pages/profile/profile_page.dart';
 
 class WishlistPage extends StatelessWidget {
   const WishlistPage({super.key});
@@ -37,18 +42,23 @@ class WishlistPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       // ================= APPBAR =================
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
 
         // BACK → KE CATEGORIES
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CategoriesPage(),
+              ),
+            );
           },
         ),
 
@@ -129,48 +139,47 @@ class WishlistPage extends StatelessWidget {
           );
         },
       ),
-
-      // ================= BOTTOM NAV =================
-      bottomNavigationBar: Container(
-        height: 70,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // HOME → KE CATEGORIES
-            GestureDetector(
-              onTap: () {
-                Navigator.pushReplacementNamed(context, '/');
-              },
-              child: const Icon(Icons.home, color: Colors.grey),
-            ),
-
-            // 🔥 SWAP → KE CATEGORIES (YANG KAMU MAKSUD)
-            GestureDetector(
-              onTap: () {
-                Navigator.pushReplacementNamed(context, '/');
-              },
-              child: const Icon(Icons.swap_horiz, color: Colors.grey),
-            ),
-
-            // CART (BELUM AKTIF)
-            const Icon(Icons.shopping_cart, color: Colors.grey),
-
-            // WISHLIST (ACTIVE)
-            const Icon(Icons.favorite, color: Colors.green),
-
-            // PROFILE
-            const CircleAvatar(
-              radius: 14,
-              backgroundColor: Colors.purple,
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: BottomNav(
+                currentIndex: 4,
+                onTap: (index) {
+                  if (index == 1) {
+                    // Swap icon → Categories Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CategoriesPage(),
+                      ),
+                    );
+                  } else if (index == 2) {
+                    // Cart icon → Cart Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const CartPage()),
+                    );
+                  } else if (index == 3) {
+                    // Heart/Love icon → Wishlist Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const WishlistPage(),
+                      ),
+                    );
+                  } else if (index == 4) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfilePage(),
+                      ),
+                    );
+                  } else {
+                    // Home icon → Home Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  }
+                },
+              ),
     );
   }
 }

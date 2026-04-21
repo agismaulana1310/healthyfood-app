@@ -1,33 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:healthyfood_app/login-page/landing_page.dart';
+import '/theme/colors.dart';
+import '/theme/theme_controller.dart';
+import '/login-page/landing_page.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-    ),
-  );
-
-  runApp(const KedeApp());
+  runApp(const MyApp());
 }
 
-class KedeApp extends StatelessWidget {
-  const KedeApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Kede Grocery App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Roboto',
-        primaryColor: const Color(0xFF51B036),
-        scaffoldBackgroundColor: Colors.white,
-      ),
+    return ValueListenableBuilder<bool>(
+      valueListenable: ThemeController.isDark,
+      builder: (context, isDark, _) {
+        return ValueListenableBuilder<Color>(
+          valueListenable: ThemeController.primaryColor,
+          builder: (context, primary, _) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
 
-      home: const LandingPage(),
+              // 🔥 LIGHT THEME
+              theme: AppTheme.light.copyWith(
+                colorScheme: AppTheme.light.colorScheme.copyWith(
+                  primary: primary,
+                ),
+              ),
+
+              // 🌙 DARK THEME
+              darkTheme: AppTheme.dark.copyWith(
+                colorScheme: AppTheme.dark.colorScheme.copyWith(
+                  primary: primary,
+                ),
+              ),
+
+              // 🔁 SWITCH THEME
+              themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+
+              // 🚀 START PAGE
+              home: const LandingPage(),
+            );
+          },
+        );
+      },
     );
   }
 }
