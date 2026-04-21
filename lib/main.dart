@@ -5,7 +5,6 @@ import 'pages/profile/profile_page.dart';
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -14,20 +13,14 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: ThemeController.isDark,
       builder: (context, isDark, child) {
-        return ValueListenableBuilder(
-          valueListenable: ThemeController.primaryColor,
-          builder: (context, primaryColor, _) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                brightness: isDark ? Brightness.dark : Brightness.light,
-                scaffoldBackgroundColor:
-                    isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
-                primaryColor: primaryColor,
-              ),
-              home: const ProfilePage(),
-            );
-          },
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            brightness: isDark ? Brightness.dark : Brightness.light,
+            scaffoldBackgroundColor:
+                isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
+          ),
+          home: const ProfilePage(),
         );
       },
     );
