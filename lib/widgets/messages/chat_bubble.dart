@@ -24,7 +24,7 @@ class ChatBubble extends StatelessWidget {
       builder: (context, isDark, _) {
         return ValueListenableBuilder(
           valueListenable: ThemeController.primaryColor,
-          builder: (context, primaryColor, __) {
+          builder: (context, primaryColor, _) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Column(

@@ -18,13 +18,13 @@ class ChatDetailPage extends StatelessWidget {
       valueListenable: ThemeController.isDark,
       builder: (context, isDark, _) {
         return Scaffold(
-          backgroundColor: isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
-            backgroundColor: isDark ? const Color(0xFF1a1a1a) : Colors.white,
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             title: Text(
               "Messages",
               style: TextStyle(
-                color: isDark ? Colors.white : Colors.black,
+                color: Theme.of(context).appBarTheme.titleTextStyle?.color,
                 fontWeight: FontWeight.w600,
               ),
             ),

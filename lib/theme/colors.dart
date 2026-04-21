@@ -1,18 +1,33 @@
 import 'package:flutter/material.dart';
-import 'theme_controller.dart';
 
-class AppColors {
-  static const backgroundLight = Color(0xFFF2F2F2);
-  static const backgroundDark = Color(0xFF0D1B0F);
-  static const white = Colors.white;
-  static const grey = Colors.grey;
-  static const defaultGreen = Color(0xFF4CAF50);
-  
-  static Color get background {
-    return ThemeController.isDark.value ? backgroundDark : backgroundLight;
-  }
+class AppTheme {
+  static final light = ThemeData(
+    brightness: Brightness.light,
+    primaryColor: Colors.green,
+    scaffoldBackgroundColor: const Color(0xFFF5F5F5),
 
-  static Color get green {
-    return ThemeController.primaryColor.value;
-  }
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.white,
+      iconTheme: IconThemeData(color: Colors.black),
+    ),
+
+    textTheme: const TextTheme(
+      bodyMedium: TextStyle(color: Colors.black),
+    ),
+  );
+
+  static final dark = ThemeData(
+    brightness: Brightness.dark,
+    primaryColor: Colors.green,
+    scaffoldBackgroundColor: const Color(0xFF121212),
+
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF1E1E1E),
+      iconTheme: IconThemeData(color: Colors.white),
+    ),
+
+    textTheme: const TextTheme(
+      bodyMedium: TextStyle(color: Colors.white),
+    ),
+  );
 }

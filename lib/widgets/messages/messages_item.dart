@@ -26,7 +26,7 @@ class MessageItem extends StatelessWidget {
       builder: (context, isDark, _) {
         return ValueListenableBuilder(
           valueListenable: ThemeController.primaryColor,
-          builder: (context, primaryColor, __) {
+          builder: (context, primaryColor, _) {
             return GestureDetector(
               onTap: () {
                 Navigator.push(

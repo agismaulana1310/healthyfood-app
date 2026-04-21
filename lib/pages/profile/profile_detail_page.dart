@@ -10,14 +10,14 @@ class ProfileDetailPage extends StatelessWidget {
       valueListenable: ThemeController.isDark,
       builder: (context, isDark, _) {
         return Scaffold(
-          backgroundColor: isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
-            backgroundColor: isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             elevation: 0,
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back,
-                color: isDark ? Colors.white : Colors.black,
+                color: Theme.of(context).appBarTheme.titleTextStyle?.color,
               ),
               onPressed: () {
                 Navigator.pop(context); // 🔙 balik
@@ -26,7 +26,7 @@ class ProfileDetailPage extends StatelessWidget {
             title: Text(
               "Profile",
               style: TextStyle(
-                color: isDark ? Colors.white : Colors.black,
+                color: Theme.of(context).appBarTheme.titleTextStyle?.color,
               ),
             ),
             centerTitle: true,

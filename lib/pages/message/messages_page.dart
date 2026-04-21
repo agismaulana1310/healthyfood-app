@@ -11,18 +11,18 @@ class MessagesPage extends StatelessWidget {
       valueListenable: ThemeController.isDark,
       builder: (context, isDark, _) {
         return Scaffold(
-          backgroundColor: isDark ? const Color(0xFF0D1B0F) : const Color(0xFFF2F2F2),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
-            backgroundColor: isDark ? const Color(0xFF1a1a1a) : Colors.white,
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             elevation: 0,
             title: Text(
               "Messages",
               style: TextStyle(
-                color: isDark ? Colors.white : Colors.black,
+                color: Theme.of(context).appBarTheme.titleTextStyle?.color,
               ),
             ),
             iconTheme: IconThemeData(
-              color: isDark ? Colors.white : Colors.black,
+              color: Theme.of(context).appBarTheme.iconTheme?.color,
             ),
             centerTitle: true,
           ),
@@ -38,6 +38,7 @@ class MessagesPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                     boxShadow: [
                       BoxShadow(
+                        // ignore: deprecated_member_use
                         color: Colors.black.withOpacity(0.05),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
