@@ -9,22 +9,17 @@ class ForgetPasswordPage extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    const String bgUrl =
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXmaJabjyuceLzxhj8K9w6QC1nVHmVZtmIuA&s';
-
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
 
       body: Stack(
         children: [
-          /// ================= BACKGROUND =================
-          Image.network(
-            bgUrl,
+          /// ================= BACKGROUND (FIXED) =================
+          Image.asset(
+            'assets/images/alpukat.png',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
-            errorBuilder: (context, error, stackTrace) =>
-                Container(color: colorScheme.surfaceVariant),
           ),
 
           /// ================= PANEL =================
@@ -52,14 +47,10 @@ class ForgetPasswordPage extends StatelessWidget {
                           'Forget Password',
                           style: textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.w900,
-                            color: colorScheme.onSurface,
                           ),
                         ),
                         IconButton(
-                          icon: Icon(
-                            Icons.cancel,
-                            color: colorScheme.onSurface,
-                          ),
+                          icon: const Icon(Icons.cancel),
                           onPressed: () => Navigator.pop(context),
                         ),
                       ],
@@ -70,33 +61,17 @@ class ForgetPasswordPage extends StatelessWidget {
                     /// ================= INPUT =================
                     TextFormField(
                       obscureText: true,
-                      style: TextStyle(color: colorScheme.onSurface),
-
                       decoration: InputDecoration(
                         hintText: 'New Password',
-                        hintStyle: TextStyle(
-                          color: colorScheme.onSurface.withOpacity(0.5),
-                        ),
-
                         filled: true,
                         fillColor: colorScheme.surfaceVariant,
-
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 18,
                         ),
-
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide.none,
-                        ),
-
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide(
-                            color: colorScheme.primary,
-                            width: 2,
-                          ),
                         ),
                       ),
                     ),
@@ -125,7 +100,6 @@ class ForgetPasswordPage extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          elevation: 0,
                         ),
                         child: const Text(
                           'SUBMIT',
@@ -133,7 +107,6 @@ class ForgetPasswordPage extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            letterSpacing: 1,
                           ),
                         ),
                       ),
@@ -145,20 +118,15 @@ class ForgetPasswordPage extends StatelessWidget {
                     Center(
                       child: Column(
                         children: [
-                          Text(
-                            'Sign in to your registered account',
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onSurface,
-                            ),
-                          ),
+                          Text('Sign in to your registered account'),
                           GestureDetector(
                             onTap: () => Navigator.pop(context),
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 4),
+                            child: const Padding(
+                              padding: EdgeInsets.only(top: 4),
                               child: Text(
                                 'Login here',
-                                style: textTheme.bodyMedium?.copyWith(
-                                  color: colorScheme.primary,
+                                style: TextStyle(
+                                  color: Colors.green,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

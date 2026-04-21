@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthyfood_app/categories-page/category_page.dart';
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
@@ -53,10 +54,14 @@ class CategoriesPage extends StatelessWidget {
 
           return GestureDetector(
             onTap: () {
-              Navigator.pushNamed(
+              Navigator.push(
                 context,
-                '/category',
-                arguments: {'name': item['name'], 'items': item['items']},
+                MaterialPageRoute(
+                  builder: (_) => const CategoryPage(),
+                  settings: RouteSettings(
+                    arguments: {'name': item['name'], 'items': item['items']},
+                  ),
+                ),
               );
             },
             child: Container(

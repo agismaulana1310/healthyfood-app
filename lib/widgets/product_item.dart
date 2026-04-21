@@ -27,78 +27,62 @@ class _ProductItemState extends State<ProductItem> {
 
   @override
   void initState() {
-    qty = widget.qty;
     super.initState();
+    qty = widget.qty;
   }
 
   @override
   Widget build(BuildContext context) {
-    double total = qty * widget.price;
+    final total = qty * widget.price;
 
     return InkWell(
+      borderRadius: BorderRadius.circular(12),
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) =>
-                ProductDetailPage(name: widget.name, price: widget.price, image: widget.image, description: widget.description),
+            builder: (_) => ProductDetailPage(
+              name: widget.name,
+              price: widget.price,
+              image: widget.image,
+              description: widget.description,
+            ),
           ),
         );
       },
       child: Container(
-        margin: const EdgeInsets.all(12),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.grey[100],
+          color: Colors.grey.shade100,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
+            /// ================= IMAGE =================
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                widget.image,
-                width: 60,
-                height: 60,
-                fit: BoxFit.cover,
-
-                loadingBuilder: (context, child, progress) {
-                  if (progress == null) return child;
-                  return const SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: Center(
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  );
-                },
-
-                // kalau error
-                errorBuilder: (context, error, stackTrace) {
-                  return const SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: Icon(Icons.image_not_supported),
-                  );
-                },
-              ),
+              child: _buildImage(widget.image),
             ),
 
-            const SizedBox(width: 10),
+            const SizedBox(width: 12),
 
+            /// ================= TEXT =================
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
                   ),
 
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
 
                   Text(
                     "\$${total.toStringAsFixed(1)}",
@@ -108,9 +92,11 @@ class _ProductItemState extends State<ProductItem> {
               ),
             ),
 
+            /// ================= QTY =================
             QuantitySelector(
               qty: qty,
               onChanged: (val) {
+                if (val < 1) return; // guard biar nggak minus
                 setState(() {
                   qty = val;
                 });
@@ -120,5 +106,39 @@ class _ProductItemState extends State<ProductItem> {
         ),
       ),
     );
+  }
+
+  /// ================= IMAGE HANDLER =================
+  Widget _buildImage(String image) {
+    final isNetwork = image.startsWith('http');
+
+    final placeholder = Container(
+      width: 60,
+      height: 60,
+      color: Colors.grey[200],
+      child: const Icon(Icons.image, size: 20),
+    );
+
+    if (isNetwork) {
+      return Image.network(
+        image,
+        width: 60,
+        height: 60,
+        fit: BoxFit.cover,
+        loadingBuilder: (context, child, progress) {
+          if (progress == null) return child;
+          return placeholder;
+        },
+        errorBuilder: (context, error, stackTrace) => placeholder,
+      );
+    } else {
+      return Image.asset(
+        image,
+        width: 60,
+        height: 60,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) => placeholder,
+      );
+    }
   }
 }

@@ -26,12 +26,10 @@ class _DetailPageState extends State<DetailPage> {
     final String image = args['image'];
 
     final double priceValue = double.parse(price.replaceAll('\$', ''));
-
     final double totalPrice = priceValue * quantity;
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-
       body: SafeArea(
         child: Column(
           children: [
@@ -41,7 +39,7 @@ class _DetailPageState extends State<DetailPage> {
                 SizedBox(
                   height: 280,
                   width: double.infinity,
-                  child: Image.network(image, fit: BoxFit.cover),
+                  child: _buildImage(image),
                 ),
 
                 Positioned(
@@ -80,10 +78,8 @@ class _DetailPageState extends State<DetailPage> {
                     top: Radius.circular(30),
                   ),
                 ),
-
                 child: Column(
                   children: [
-                    /// SCROLL AREA
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
@@ -103,7 +99,6 @@ class _DetailPageState extends State<DetailPage> {
                               name,
                               style: textTheme.titleLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: colorScheme.onSurface,
                               ),
                             ),
 
@@ -121,46 +116,7 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                 ),
 
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.surfaceVariant,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.remove,
-                                          color: colorScheme.onSurface,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            if (quantity > 1) {
-                                              quantity--;
-                                            }
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        '$quantity',
-                                        style: TextStyle(
-                                          color: colorScheme.onSurface,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.add,
-                                          color: colorScheme.onSurface,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            quantity++;
-                                          });
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                _qtySelector(colorScheme),
                               ],
                             ),
 
@@ -244,13 +200,11 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               );
                             },
-                            child: Center(
-                              child: Text(
-                                'ADD TO CART  \$${totalPrice.toStringAsFixed(1)}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            child: Text(
+                              'ADD TO CART  \$${totalPrice.toStringAsFixed(1)}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -267,16 +221,69 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  /// TAB
+  /// ================= IMAGE HANDLER =================
+  Widget _buildImage(String image) {
+    final isNetwork = image.startsWith('http');
+
+    final placeholder = Container(
+      color: Colors.grey[200],
+      child: const Center(child: Icon(Icons.image)),
+    );
+
+    if (isNetwork) {
+      return Image.network(
+        image,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        errorBuilder: (_, __, ___) => placeholder,
+      );
+    } else {
+      return Image.asset(
+        image,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        errorBuilder: (_, __, ___) => placeholder,
+      );
+    }
+  }
+
+  /// ================= QTY =================
+  Widget _qtySelector(ColorScheme colorScheme) {
+    return Container(
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceVariant,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            icon: Icon(Icons.remove, color: colorScheme.onSurface),
+            onPressed: () {
+              setState(() {
+                if (quantity > 1) quantity--;
+              });
+            },
+          ),
+          Text('$quantity'),
+          IconButton(
+            icon: Icon(Icons.add, color: colorScheme.onSurface),
+            onPressed: () {
+              setState(() {
+                quantity++;
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// ================= TAB =================
   Widget _buildTab(BuildContext context, String title, int index) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedTab = index;
-        });
-      },
+      onTap: () => setState(() => selectedTab = index),
       child: Padding(
         padding: const EdgeInsets.only(right: 20),
         child: Column(
@@ -304,24 +311,14 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  Widget _description(ColorScheme colorScheme) {
-    return Text(
-      'Buah yang menyehatkan dan menyegarkan.',
-      style: TextStyle(color: colorScheme.outline),
-    );
-  }
+  Widget _description(ColorScheme colorScheme) => Text(
+    'Buah yang menyehatkan.',
+    style: TextStyle(color: colorScheme.outline),
+  );
 
-  Widget _review(ColorScheme colorScheme) {
-    return Text(
-      'Buah dengan kualitas premium.',
-      style: TextStyle(color: colorScheme.outline),
-    );
-  }
+  Widget _review(ColorScheme colorScheme) =>
+      Text('Kualitas premium.', style: TextStyle(color: colorScheme.outline));
 
-  Widget _discussion(ColorScheme colorScheme) {
-    return Text(
-      'Belum ada diskusi.',
-      style: TextStyle(color: colorScheme.outline),
-    );
-  }
+  Widget _discussion(ColorScheme colorScheme) =>
+      Text('Belum ada diskusi.', style: TextStyle(color: colorScheme.outline));
 }

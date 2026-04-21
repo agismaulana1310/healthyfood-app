@@ -41,7 +41,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             // ================= IMAGE =================
             Stack(
               children: [
-                Image.network(
+                Image.asset(
                   widget.image,
                   height: 280,
                   width: double.infinity,
@@ -161,8 +161,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 comment:
                                     "mantap banget, rasanya enak dan segar. Recommended!",
                                 rating: 4,
-                                image:
-                                    "https://plus.unsplash.com/premium_photo-1669704099116-a325b4d6186f",
+                                image:'assets/images/rv1.png',
                               ),
                               const ReviewItem(
                                 name: "Leo Tucker",
@@ -170,8 +169,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                 comment:
                                     "ga bosen dimakan, apalagi pas panas. Seger banget!",
                                 rating: 5,
-                                image:
-                                    "https://images.unsplash.com/photo-1517677129300-07b130802f46",
+                                image:'assets/images/rv2.png',
                               ),
                             ],
 

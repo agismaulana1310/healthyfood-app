@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'categories_page.dart';
+import 'detail_page.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -15,29 +16,25 @@ class _CategoryPageState extends State<CategoryPage> {
     {
       'name': 'Avocado',
       'price': '\$6.7',
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYe-NnBRQOLO2tLZkUyiQ4LH0LPoBflFVtVg&s',
+      'image':'assets/images/alpukat.png',
       'isFavorite': false,
     },
     {
       'name': 'Broccoli',
       'price': '\$8.7',
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj-tiBKMEOi6IlBI31zKf-k9mpgAOceezDaA&s',
+      'image':'assets/images/brokoli.png',
       'isFavorite': false,
     },
     {
       'name': 'Tomatoes',
       'price': '\$4.9',
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0YYiMyh3OM_g_6HQlEDQ_2Eh6ksCg9-tyGQ&s',
+      'image':'assets/images/tomat.png',
       'isFavorite': false,
     },
     {
       'name': 'Grapes',
       'price': '\$7.2',
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWNS0ut2GrjHs7fo9UZ9CrJHcsO9DmRXoAiA&s',
+      'image':'assets/images/anggur.png',
       'isFavorite': false,
     },
   ];
@@ -168,55 +165,57 @@ class _CategoryPageState extends State<CategoryPage> {
               itemBuilder: (context, index) {
                 final product = filteredProducts[index];
 
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                      image: NetworkImage(product['image']),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Stack(
-                    children: [
-                      /// OVERLAY
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.black.withOpacity(0.3),
-                        ),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const DetailPage(),
+                        settings: RouteSettings(arguments: product),
                       ),
-
-                      /// FAVORITE
-                      Positioned(
-                        top: 10,
-                        left: 10,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              product['isFavorite'] = !product['isFavorite'];
-                            });
-                          },
-                          child: Icon(
-                            Icons.favorite,
-                            color: product['isFavorite']
-                                ? Colors.pink
-                                : Colors.white,
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                        image: AssetImage(product['image']),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Stack(
+                      children: [
+                        /// OVERLAY
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.black.withOpacity(0.3),
                           ),
                         ),
-                      ),
 
-                      /// TEXT
-                      Positioned(
-                        bottom: 15,
-                        left: 12,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/detail',
-                              arguments: product,
-                            );
-                          },
+                        /// FAVORITE
+                        Positioned(
+                          top: 10,
+                          left: 10,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                product['isFavorite'] = !product['isFavorite'];
+                              });
+                            },
+                            child: Icon(
+                              Icons.favorite,
+                              color: product['isFavorite']
+                                  ? Colors.pink
+                                  : Colors.white,
+                            ),
+                          ),
+                        ),
+
+                        /// TEXT
+                        Positioned(
+                          bottom: 15,
+                          left: 12,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -236,8 +235,8 @@ class _CategoryPageState extends State<CategoryPage> {
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

@@ -10,22 +10,17 @@ class CreateAccountPage extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    const String registerBgUrl =
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV8MLo1xl4P1enWfUkPKUlko5edOI9W7lhGw&s';
-
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
 
       body: Stack(
         children: [
-          /// ================= BACKGROUND =================
-          Image.network(
-            registerBgUrl,
+          /// ================= BACKGROUND (FIXED) =================
+          Image.asset(
+            'assets/images/anggur.png',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
-            errorBuilder: (context, error, stackTrace) =>
-                Container(color: colorScheme.surfaceVariant),
           ),
 
           /// ================= PANEL =================
@@ -53,14 +48,10 @@ class CreateAccountPage extends StatelessWidget {
                           'Create your account',
                           style: textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.w900,
-                            color: colorScheme.onSurface,
                           ),
                         ),
                         IconButton(
-                          icon: Icon(
-                            Icons.cancel,
-                            color: colorScheme.onSurface,
-                          ),
+                          icon: const Icon(Icons.cancel),
                           onPressed: () => Navigator.pop(context),
                         ),
                       ],
@@ -77,6 +68,7 @@ class CreateAccountPage extends StatelessWidget {
                       hint: 'Enter your password',
                       isPassword: true,
                     ),
+
                     const SizedBox(height: 16),
 
                     /// ================= TERMS =================
@@ -114,7 +106,6 @@ class CreateAccountPage extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          elevation: 0,
                         ),
                         child: const Text(
                           'CREATE AN ACCOUNT',
@@ -122,7 +113,6 @@ class CreateAccountPage extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            letterSpacing: 1,
                           ),
                         ),
                       ),
@@ -143,33 +133,21 @@ class CreateAccountPage extends StatelessWidget {
     required String hint,
     bool isPassword = false,
   }) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return TextFormField(
       obscureText: isPassword,
-      style: TextStyle(color: colorScheme.onSurface),
-
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.5)),
-
         filled: true,
         fillColor: colorScheme.surfaceVariant,
-
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 18,
         ),
-
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,
-        ),
-
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: colorScheme.primary, width: 2),
         ),
       ),
     );

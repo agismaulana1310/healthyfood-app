@@ -12,24 +12,18 @@ class SignInPage extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    const String loginBgUrl =
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtWuGaBnLOhzG4wbUhFxtF9K0_HytXJJQOIA&s';
-
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
 
       body: Stack(
         children: [
           /// ================= BACKGROUND =================
-          Image.network(
-            loginBgUrl,
+          Image.asset(
+            'assets/images/login.png',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
-            errorBuilder: (context, error, stackTrace) =>
-                Container(color: colorScheme.surfaceVariant),
           ),
-
           /// ================= PANEL =================
           Align(
             alignment: Alignment.bottomCenter,

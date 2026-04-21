@@ -11,19 +11,19 @@ class Trending extends StatelessWidget {
       {
         "title": "Avocado",
         "price": "\$6.7",
-        "img": "assets/images/avocado.webp",
+        "img": "assets/images/alpukat.png",
       },
       {
         "title": "Broccoli",
         "price": "\$8.7",
-        "img": "assets/images/broccoli.webp",
+        "img": "assets/images/brokoli.png",
       },
       {
         "title": "Tomatoes",
         "price": "\$4.9",
-        "img": "assets/images/tomato.webp",
+        "img": "assets/images/tomat.png",
       },
-      {"title": "Grapes", "price": "\$7.2", "img": "assets/images/grapes.jpg"},
+      {"title": "Grapes", "price": "\$7.2", "img": "assets/images/anggur.png"},
     ];
 
     return Padding(
